@@ -155,16 +155,6 @@ public class Login extends javax.swing.JFrame {
 
         userName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         userName.setForeground(new java.awt.Color(102, 102, 102));
-        userName.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                userNameFocusLost(evt);
-            }
-        });
-        userName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userNameActionPerformed(evt);
-            }
-        });
         loginPanel.add(userName);
         userName.setBounds(200, 150, 180, 30);
 
@@ -174,7 +164,7 @@ public class Login extends javax.swing.JFrame {
         loginPanel.add(jLabel3);
         jLabel3.setBounds(30, 150, 120, 30);
 
-        login.setIcon(new javax.swing.ImageIcon("C:\\Users\\lenovo pc\\Documents\\GroupOn1\\images\\login2.jpg")); // NOI18N
+        login.setIcon(new javax.swing.ImageIcon("C:\\Users\\ZISHAN\\Documents\\GitHub\\GroupOn\\images\\login2.jpg")); // NOI18N
         login.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 loginMouseClicked(evt);
@@ -189,20 +179,14 @@ public class Login extends javax.swing.JFrame {
         loginPanel.add(jLabel4);
         jLabel4.setBounds(30, 240, 120, 30);
 
-        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\lenovo pc\\Documents\\GroupOn1\\images\\register_now_button (1).jpg")); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\ZISHAN\\Documents\\GitHub\\GroupOn\\images\\register_now_button (1).jpg")); // NOI18N
         jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel6MouseClicked(evt);
             }
         });
         loginPanel.add(jLabel6);
-        jLabel6.setBounds(260, 350, 210, 60);
-
-        password.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                passwordFocusLost(evt);
-            }
-        });
+        jLabel6.setBounds(260, 350, 210, 50);
         loginPanel.add(password);
         password.setBounds(200, 230, 180, 30);
 
@@ -231,10 +215,6 @@ public class Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void userNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_userNameActionPerformed
 
     private void loginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginMouseClicked
         // TODO add your handling code here:
@@ -283,33 +263,6 @@ public class Login extends javax.swing.JFrame {
         loginPanel.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void passwordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordFocusLost
-        // TODO add your handling code here:
-        String p1 = new String(password.getPassword());
-        if(p1.length()<8)
-            JOptionPane.showMessageDialog(null, "Password Length should be minimum 8 characters");
-    }//GEN-LAST:event_passwordFocusLost
-
-    private void userNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_userNameFocusLost
-        // TODO add your handling code here:
-        String user = userName.getText();
-        if(user.length()==0)
-            JOptionPane.showMessageDialog(null, "Please Enter username");
-        else
-        {
-        try
-        {
-            String usercheck="CHECKUSER: "+user;
-            cl.write(usercheck); 
-            String response=cl.read();
-            if(response.equals(user)==false)
-                JOptionPane.showMessageDialog(null, "User does not exist");
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-    }//GEN-LAST:event_userNameFocusLost
-    }}
     /**
      * @param args the command line arguments
      */

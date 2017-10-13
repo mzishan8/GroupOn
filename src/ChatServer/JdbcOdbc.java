@@ -38,7 +38,7 @@ public class JdbcOdbc {
             //pst.setString(1, userName);
             rs=(OracleResultSet) pst.executeQuery();
           //  if(rs.next())
-            //    System.out.println("Data Base Responce "+rs.getString(1)+" ");
+           //     System.out.println("Data Base Responce "+rs.getString(1)+" ");
         return rs.next();
     }
     public boolean isUserExist(String user){

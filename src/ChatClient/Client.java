@@ -39,6 +39,11 @@ public class Client {
             String res = dis.readUTF();
             if(res.equals(user)){
                 JOptionPane.showMessageDialog(null, "You are Currect User");
+                java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new ChatFrame().setVisible(true);
+            }
+        });
                // rdth.start();
             }
             else{

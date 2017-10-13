@@ -116,6 +116,8 @@ class ClientHandler implements Runnable{
                    System.out.println(client.getUserName()+"  Client Loged In ");
                    broadcost("ChatServer: User "+client.getUserName()+" Logged In");
                 }
+               else
+                   client.write("*********");
             } catch (SQLException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
