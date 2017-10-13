@@ -82,6 +82,17 @@ class ClientHandler implements Runnable{
                     Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            if(clientMsg.startsWith("CHECKUSER: ")){
+                String user = clientMsg.split(" ")[1];
+               try{
+                if(db.isUserExist(user))
+                    client.write(user);
+                else
+                    client.write("*********");
+               }catch (IOException ex) {
+                    Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
             if(clientMsg.startsWith("NEWUSER: ")){
                 try {
                     createUser(clientMsg);
