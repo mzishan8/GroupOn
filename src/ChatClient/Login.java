@@ -1,7 +1,7 @@
 package ChatClient;
 
 
-import java.io.IOException;
+import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -155,6 +155,11 @@ public class Login extends javax.swing.JFrame {
 
         userName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         userName.setForeground(new java.awt.Color(102, 102, 102));
+        userName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                userNameFocusLost(evt);
+            }
+        });
         userName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 userNameActionPerformed(evt);
@@ -192,6 +197,12 @@ public class Login extends javax.swing.JFrame {
         });
         loginPanel.add(jLabel6);
         jLabel6.setBounds(260, 350, 210, 60);
+
+        password.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                passwordFocusLost(evt);
+            }
+        });
         loginPanel.add(password);
         password.setBounds(200, 230, 180, 30);
 
@@ -246,7 +257,7 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Password Not Matched");
         }
        else if(p1.length()<8){
-            JOptionPane.showMessageDialog(null, "Password Lenght should be 8");
+            JOptionPane.showMessageDialog(null, "Password Length should be minimum 8 characters");
         }
        else{
             try {
@@ -272,6 +283,33 @@ public class Login extends javax.swing.JFrame {
         loginPanel.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void passwordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordFocusLost
+        // TODO add your handling code here:
+        String p1 = new String(password.getPassword());
+        if(p1.length()<8)
+            JOptionPane.showMessageDialog(null, "Password Length should be minimum 8 characters");
+    }//GEN-LAST:event_passwordFocusLost
+
+    private void userNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_userNameFocusLost
+        // TODO add your handling code here:
+        String user = userName.getText();
+        if(user.length()==0)
+            JOptionPane.showMessageDialog(null, "Please Enter username");
+        else
+        {
+        try
+        {
+            String usercheck="CHECKUSER: "+user;
+            cl.write(usercheck); 
+            String response=cl.read();
+            if(response.equals(user)==false)
+                JOptionPane.showMessageDialog(null, "User does not exist");
+        }
+        catch(Exception ex)
+        {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+    }//GEN-LAST:event_userNameFocusLost
+    }}
     /**
      * @param args the command line arguments
      */
