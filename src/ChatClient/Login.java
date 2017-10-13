@@ -169,7 +169,7 @@ public class Login extends javax.swing.JFrame {
         loginPanel.add(jLabel3);
         jLabel3.setBounds(30, 150, 120, 30);
 
-        login.setIcon(new javax.swing.ImageIcon("C:\\Users\\ZISHAN\\Desktop\\login2.jpg")); // NOI18N
+        login.setIcon(new javax.swing.ImageIcon("C:\\Users\\ZISHAN\\Documents\\NetBeansProjects\\GroupOn\\images\\login2.jpg")); // NOI18N
         login.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 loginMouseClicked(evt);
@@ -184,7 +184,7 @@ public class Login extends javax.swing.JFrame {
         loginPanel.add(jLabel4);
         jLabel4.setBounds(30, 240, 120, 30);
 
-        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\ZISHAN\\Desktop\\register_now_button (1).jpg")); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\ZISHAN\\Documents\\NetBeansProjects\\GroupOn\\images\\register_now_button (1).jpg")); // NOI18N
         jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel6MouseClicked(evt);
