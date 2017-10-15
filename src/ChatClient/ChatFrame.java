@@ -23,14 +23,15 @@ import javax.swing.SwingConstants;
  */
 public class ChatFrame extends javax.swing.JFrame {
      Client client;
-    /**
+     ArrayList<JLabel> onlineList;    /**
      * Creates new form ChatFrame
      * @param client
      */
     public ChatFrame(Client client) {
         initComponents();
         this.client=client;
-        new Thread(new ReadMsg(client,msgBox,onlineUser)).start();
+        onlineList=new ArrayList<JLabel>();
+        new Thread(new ReadMsg(client,msgBox,onlineUser,onlineList)).start();
     }
 
     /**
@@ -74,7 +75,7 @@ public class ChatFrame extends javax.swing.JFrame {
         onlineUser.setLayout(onlineUserLayout);
         onlineUserLayout.setHorizontalGroup(
             onlineUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 152, Short.MAX_VALUE)
+            .addGap(0, 161, Short.MAX_VALUE)
         );
         onlineUserLayout.setVerticalGroup(
             onlineUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,10 +105,10 @@ public class ChatFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(106, 106, 106)
                 .addComponent(btnViewProfile6, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(106, 106, 106))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,10 +180,12 @@ class ReadMsg implements Runnable{
         Client client;
         JTextArea msgBox;
         JPanel onlineUser;
-        public ReadMsg(Client client , JTextArea msgBox , JPanel onlineUser){
+        ArrayList<JLabel> onlineList;
+        public ReadMsg(Client client , JTextArea msgBox , JPanel onlineUser,ArrayList<JLabel> onlineList){
             this.client = client;
             this.msgBox = msgBox;
             this.onlineUser = onlineUser;
+            this.onlineList=onlineList;
         }
         @Override
         public void run() {
@@ -191,7 +194,7 @@ class ReadMsg implements Runnable{
                     String msg = client.read();
                     if(msg.startsWith("USERLIST: ")){
                         String users[] = msg.split(" ")[1].split(",");
-                        ArrayList<JLabel> onlineList=new ArrayList<JLabel>();
+                        
                         for(int i = 0 ; i < users.length;i++ ){
                             JLabel online=new JLabel(users[i],SwingConstants.CENTER);
                             onlineList.add(online);
@@ -200,8 +203,16 @@ class ReadMsg implements Runnable{
                             onlineList.get(i).setForeground(Color.blue);
                             onlineList.get(i).setVisible(true);
                             onlineList.get(i).setBounds(5,5+(i-1)*20,150,20);
-                                    onlineUser.add(onlineList.get(i));
+                            onlineUser.add(onlineList.get(i));
                                 }
+                        for(int i=0;i<onlineList.size();i++){
+                            onlineList.get(i).addMouseListener(new java.awt.event.MouseAdapter(){
+                                public void mouseClicked(java.awt.event.MouseEvent evt){
+                                    System.out.println("prem");
+                                }
+                            });
+                            
+                        }
                     }
                     else if(msg.startsWith("ChatServer: "))
                             {
