@@ -104,12 +104,19 @@ class ClientHandler implements Runnable{
       while(true){
           String msg = client.read();
             try {
+                if(msg == null)
+                    break;
                 broadcast(client.getUserName()+" : "+msg);
             } catch (IOException ex) {
                 Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
           System.out.println(msg);
-      }  
+      }
+        try {
+            exit();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public synchronized boolean authenticate(String user , String pass) throws IOException{
         boolean accept = false;
@@ -130,6 +137,19 @@ class ClientHandler implements Runnable{
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
         return accept;
+    }
+    public synchronized void exit() throws IOException{
+        String exitMsg = "ChatServer: User " + client.getUserName();
+		exitMsg += " has left the chat.";
+		
+		broadcast(exitMsg);
+
+		client.disconnect();
+		clientList.remove(client);
+		
+		updateClientList();
+		
+		System.out.println("Log: Client socket closed, removed from client list");
     }
     public synchronized void updateClientList() throws IOException{
         String userList = "USERLIST: ";

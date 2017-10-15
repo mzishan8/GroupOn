@@ -24,7 +24,9 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         
         cl=new Client();
+        System.out.println("connection is creating");
         if(!cl.connection("localhost",2001)) {
+            System.out.println("connection not created");
         } else {
             JOptionPane.showMessageDialog(null, "Conection Created");
         }
