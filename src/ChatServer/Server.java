@@ -154,7 +154,7 @@ class ClientHandler implements Runnable{
     public synchronized void updateClientList() throws IOException{
         String userList = "USERLIST: ";
         for (Session clientList1 : clientList) {
-            userList += " " + clientList1.getUserName();
+            userList += "," + clientList1.getUserName();
         }
         broadcast(userList);
     }
