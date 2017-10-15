@@ -25,6 +25,7 @@ public class Client {
     Socket soc=null;
     DataOutputStream dos=null;
     DataInputStream dis=null;
+    Client client;
     /**
      *
      * @param user
@@ -32,6 +33,7 @@ public class Client {
      */
     public void  login(String user , String pass) {
         System.out.println("Login Function of Cleint class Is Called");
+        client = this;
         try{
             String msg = "LOGIN: "+user+","+pass;
             dos.writeUTF(msg);
@@ -41,7 +43,7 @@ public class Client {
                 JOptionPane.showMessageDialog(null, "You are Currect User");
                 java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ChatFrame().setVisible(true);
+                new ChatFrame(client).setVisible(true);
             }
         });
                // rdth.start();

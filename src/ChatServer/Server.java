@@ -101,7 +101,10 @@ class ClientHandler implements Runnable{
                 }
             }
         }while(!accept);
-     // while(true)  
+      while(true){
+          String msg = client.read();
+          System.out.println(msg);
+      }  
     }
     public synchronized boolean authenticate(String user , String pass) throws IOException{
         boolean accept = false;
