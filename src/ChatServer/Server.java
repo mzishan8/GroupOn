@@ -149,6 +149,19 @@ class ClientHandler implements Runnable{
         }
         return accept;
     }
+    public synchronized void exit() throws IOException{
+        String exitMsg = "ChatServer: User " + client.getUserName();
+		exitMsg += " has left the chat.";
+		
+		broadcast(exitMsg);
+
+		client.disconnect();
+		clientList.remove(client);
+		
+		updateClientList();
+		
+		System.out.println("Log: Client socket closed, removed from client list");
+    }
     public synchronized void updateClientList() throws IOException{
         String userList = "USERLIST: ";
         for (Session clientList1 : clientList) {
