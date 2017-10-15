@@ -103,6 +103,11 @@ class ClientHandler implements Runnable{
         }while(!accept);
       while(true){
           String msg = client.read();
+            try {
+                broadcast(client.getUserName()+" : "+msg);
+            } catch (IOException ex) {
+                Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+            }
           System.out.println(msg);
       }  
     }
@@ -117,7 +122,7 @@ class ClientHandler implements Runnable{
                    client.write(user);
                    updateClientList();
                    System.out.println(client.getUserName()+"  Client Loged In ");
-                   broadcost("ChatServer: User "+client.getUserName()+" Logged In");
+                   broadcast("ChatServer: User "+client.getUserName()+" Logged In");
                 }
                else
                    client.write("*********");
@@ -127,13 +132,13 @@ class ClientHandler implements Runnable{
         return accept;
     }
     public synchronized void updateClientList() throws IOException{
-        String userList = "USRLIST: ";
+        String userList = "USERLIST: ";
         for (Session clientList1 : clientList) {
             userList += " " + clientList1.getUserName();
         }
-        broadcost(userList);
+        broadcast(userList);
     }
-    public synchronized void broadcost(String msg) throws IOException{
+    public synchronized void broadcast(String msg) throws IOException{
         for(int i = 0 ; i < clientList.size() ; i++){
             clientList.get(i).write(msg);
         }

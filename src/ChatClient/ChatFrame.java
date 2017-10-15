@@ -9,6 +9,9 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  *
@@ -23,6 +26,7 @@ public class ChatFrame extends javax.swing.JFrame {
     public ChatFrame(Client client) {
         initComponents();
         this.client=client;
+        new Thread(new ReadMsg(client,msgBox,onlineUser)).start();
     }
 
     /**
@@ -53,7 +57,6 @@ public class ChatFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         chatBox.setBackground(new java.awt.Color(255, 153, 0));
-        chatBox.setText("Chat Box");
         chatBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chatBoxActionPerformed(evt);
@@ -154,7 +157,6 @@ public class ChatFrame extends javax.swing.JFrame {
 
         msgBox.setColumns(20);
         msgBox.setRows(5);
-        msgBox.setText("Dummy text\nfor \nchat window");
         jScrollPane1.setViewportView(msgBox);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -192,6 +194,7 @@ public class ChatFrame extends javax.swing.JFrame {
     private void chatBoxKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_chatBoxKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER){
             sendMsg(chatBox.getText());
+            chatBox.setText(null);
         }
     }//GEN-LAST:event_chatBoxKeyPressed
 
@@ -205,7 +208,39 @@ public class ChatFrame extends javax.swing.JFrame {
              Logger.getLogger(ChatFrame.class.getName()).log(Level.SEVERE, null, ex);
          }
  }
-
+class ReadMsg implements Runnable{
+        Client client;
+        JTextArea msgBox;
+        JPanel onlineUser;
+        public ReadMsg(Client client , JTextArea msgBox , JPanel onlineUser){
+            this.client = client;
+            this.msgBox = msgBox;
+            this.onlineUser = onlineUser;
+        }
+        @Override
+        public void run() {
+            try{
+                while(true){
+                    String msg = client.read();
+                    if(msg.startsWith("USERLIST: ")){
+                        
+                    }
+                    else if(msg.startsWith("ChatServer: "))
+                            {
+                        
+                    }
+                    else{
+                        String oldMsg = msgBox.getText();
+                        msgBox.setText( oldMsg+"\n"+msg);
+                    }
+                }
+            }catch(Exception ex){
+                System.out.println(ex);
+            }
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+    
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnViewProfile6;
     private javax.swing.JTextField chatBox;
