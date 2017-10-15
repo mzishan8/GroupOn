@@ -43,7 +43,7 @@ public class Client {
                 JOptionPane.showMessageDialog(null, "You are Currect User");
                 java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ChatFrame(client).setVisible(true);
+                new GroupChat(client).setVisible(true);
             }
         });
                // rdth.start();
