@@ -46,7 +46,7 @@ public class Login extends javax.swing.JFrame {
         registerPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        rUserName = new javax.swing.JTextField();
+        rLastName = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         rPassword = new javax.swing.JPasswordField();
         submit = new javax.swing.JButton();
@@ -57,6 +57,10 @@ public class Login extends javax.swing.JFrame {
         mobile = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         email = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        rUserName1 = new javax.swing.JTextField();
+        rLastName1 = new javax.swing.JTextField();
         loginPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         userName = new javax.swing.JTextField();
@@ -79,19 +83,19 @@ public class Login extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel7.setText("User Name");
+        jLabel7.setText("Username");
         registerPanel.add(jLabel7);
-        jLabel7.setBounds(80, 60, 150, 30);
-        registerPanel.add(rUserName);
-        rUserName.setBounds(270, 60, 170, 30);
+        jLabel7.setBounds(80, 190, 150, 30);
+        registerPanel.add(rLastName);
+        rLastName.setBounds(260, 40, 170, 30);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(102, 102, 102));
         jLabel8.setText("Password");
         registerPanel.add(jLabel8);
-        jLabel8.setBounds(80, 100, 110, 40);
+        jLabel8.setBounds(80, 230, 110, 40);
         registerPanel.add(rPassword);
-        rPassword.setBounds(270, 100, 170, 30);
+        rPassword.setBounds(260, 240, 170, 30);
 
         submit.setBackground(new java.awt.Color(102, 102, 102));
         submit.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -104,15 +108,15 @@ public class Login extends javax.swing.JFrame {
             }
         });
         registerPanel.add(submit);
-        submit.setBounds(90, 310, 100, 40);
+        submit.setBounds(90, 410, 100, 40);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
         jLabel1.setText("Confirm Password");
         registerPanel.add(jLabel1);
-        jLabel1.setBounds(80, 150, 180, 22);
+        jLabel1.setBounds(80, 290, 180, 22);
         registerPanel.add(rePassword);
-        rePassword.setBounds(270, 140, 170, 30);
+        rePassword.setBounds(260, 290, 170, 30);
 
         jButton1.setBackground(new java.awt.Color(102, 102, 102));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -125,23 +129,39 @@ public class Login extends javax.swing.JFrame {
             }
         });
         registerPanel.add(jButton1);
-        jButton1.setBounds(350, 310, 100, 40);
+        jButton1.setBounds(290, 410, 100, 40);
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(102, 102, 102));
         jLabel9.setText("Mobile Number");
         registerPanel.add(jLabel9);
-        jLabel9.setBounds(80, 190, 160, 22);
+        jLabel9.setBounds(80, 340, 160, 22);
         registerPanel.add(mobile);
-        mobile.setBounds(270, 180, 170, 30);
+        mobile.setBounds(260, 340, 170, 30);
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(102, 102, 102));
         jLabel10.setText("Email Id");
         registerPanel.add(jLabel10);
-        jLabel10.setBounds(80, 230, 140, 22);
+        jLabel10.setBounds(80, 140, 140, 30);
         registerPanel.add(email);
-        email.setBounds(270, 220, 170, 30);
+        email.setBounds(260, 140, 170, 30);
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel11.setText("First Name");
+        registerPanel.add(jLabel11);
+        jLabel11.setBounds(80, 40, 150, 30);
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel12.setText("Last Name");
+        registerPanel.add(jLabel12);
+        jLabel12.setBounds(80, 90, 150, 30);
+        registerPanel.add(rUserName1);
+        rUserName1.setBounds(260, 190, 170, 30);
+        registerPanel.add(rLastName1);
+        rLastName1.setBounds(260, 90, 170, 30);
 
         loginPanel.setBackground(new java.awt.Color(0, 0, 0));
         loginPanel.setMinimumSize(new java.awt.Dimension(500, 500));
@@ -243,7 +263,7 @@ public class Login extends javax.swing.JFrame {
         }
        else{
             try {
-                cl.write("NEWUSER: "+rUserName.getText()+","+p1+","+mobile.getText()+","+email.getText());
+                cl.write("NEWUSER: "+rLastName.getText()+","+p1+","+mobile.getText()+","+email.getText());
                 res = cl.read();
                 if(res.equals("USEREXIST"))
                      JOptionPane.showMessageDialog(null, "User Exist");
@@ -303,6 +323,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -315,8 +337,10 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel loginPanel;
     private javax.swing.JTextField mobile;
     private javax.swing.JPasswordField password;
+    private javax.swing.JTextField rLastName;
+    private javax.swing.JTextField rLastName1;
     private javax.swing.JPasswordField rPassword;
-    private javax.swing.JTextField rUserName;
+    private javax.swing.JTextField rUserName1;
     private javax.swing.JPasswordField rePassword;
     private javax.swing.JPanel registerPanel;
     private javax.swing.JButton submit;

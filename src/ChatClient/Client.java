@@ -26,12 +26,14 @@ public class Client {
     DataOutputStream dos=null;
     DataInputStream dis=null;
     Client client;
+    String userName;
     /**
      *
      * @param user
      * @param pass
      */
     public void  login(String user , String pass) {
+        userName=user;
         System.out.println("Login Function of Cleint class Is Called");
         client = this;
         try{
@@ -42,6 +44,7 @@ public class Client {
             if(res.equals(user)){
                 JOptionPane.showMessageDialog(null, "You are Currect User");
                 java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new GroupChat(client).setVisible(true);
             }
@@ -59,7 +62,6 @@ public class Client {
             try {
                     soc=new Socket(ip,port);
                     dos = new DataOutputStream(soc.getOutputStream());
-
                     dis = new DataInputStream(soc.getInputStream());
                 } catch (IOException ex) {
                     Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
@@ -70,7 +72,11 @@ public class Client {
         return dis.readUTF();
     }
 
-    public void write(String string) throws IOException {
-        dos.writeUTF(string);
+    public void write(String msg) throws IOException {
+        dos.writeUTF(msg);
+    }
+    public String getUserName()
+    {
+        return userName;
     }
 }

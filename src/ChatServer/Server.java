@@ -159,9 +159,9 @@ class ClientHandler implements Runnable{
     }
     public synchronized void broadcast(String msg) throws IOException{
         for(int i = 0 ; i < clientList.size() ; i++){
-            clientList.get(i).write(msg);
+                clientList.get(i).write(msg);
         }
-        System.out.println("Message BroadCost "+msg);
+        System.out.println("Message BroadCast"+msg);
     }
     public synchronized void createUser(String msg) throws IOException{
         String detail[] =msg.split(" ")[1].split(",");

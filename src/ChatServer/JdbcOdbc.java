@@ -26,7 +26,7 @@ public class JdbcOdbc {
     public JdbcOdbc(){
         try{
             Class.forName("oracle.jdbc.OracleDriver");
-            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "SYSTEM", "sanu786");  
+            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "system", "sanu786");  
         }catch(ClassNotFoundException | SQLException ex){
             System.out.println(ex);
         }

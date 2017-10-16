@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
 import javax.swing.SwingConstants;
 
 /**
@@ -29,6 +30,7 @@ public class GroupChat extends javax.swing.JFrame {
      */
     public GroupChat(Client client) {
         initComponents();
+        jScrollPane1.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_NEVER);
         this.client=client;
         onlineList=new ArrayList<JLabel>();
         new Thread(new ReadMsg(client,msgBox,onlineUser,onlineList)).start();
@@ -194,10 +196,17 @@ class ReadMsg implements Runnable{
                 while(true){
                     String msg = client.read();
                     if(msg.startsWith("USERLIST: ")){
+                        //System.out.println("Hello");
                         String users[] = msg.split(" ")[1].split(",");
-                        
+                      /*  for(int i=0;i<users.length;i++)
+                            System.out.println(users[i]);*/
+                        onlineList.clear();
+                        onlineUser.removeAll();
+                        onlineUser.revalidate();
+                        onlineUser.repaint();
                         for(int i = 0 ; i < users.length;i++ ){
                             JLabel online=new JLabel(users[i],SwingConstants.CENTER);
+                            if(!users[i].equals(client.getUserName()))
                             onlineList.add(online);
                         }
                         for(int i = 0 ; i < onlineList.size();i++){
