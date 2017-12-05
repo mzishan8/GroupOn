@@ -1,9 +1,10 @@
 package ChatServer;
 
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,13 +22,13 @@ import java.util.logging.Logger;
 public class Session {
     private Socket soc;
     private String userName;
-    private DataInputStream dis;
-    private DataOutputStream dos;
+    private BufferedReader dis;
+    private PrintWriter dos;
     public Session(Socket soc){
         this.soc=soc;
         try {
-            dis=new DataInputStream(soc.getInputStream());
-            dos=new DataOutputStream(soc.getOutputStream());
+            dis=new BufferedReader(new InputStreamReader(soc.getInputStream()));
+            dos=new PrintWriter(soc.getOutputStream(),true);
         } catch (IOException ex) {
             Logger.getLogger(Session.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -36,14 +37,15 @@ public class Session {
         userName=user;
     }
     public void write(String msg) throws IOException{
-        dos.writeUTF(msg);
+        dos.println(msg);
         dos.flush();
     }
     public String read(){
         String msg = null;
         try {
-             msg= dis.readUTF();
-             System.out.println("Client message  "+msg);
+            msg = dis.readLine();
+           // while((msg = dis.readLine()) == null );
+             System.out.println("Client message   "+msg);
         } catch (IOException ex) {
             Logger.getLogger(Session.class.getName()).log(Level.SEVERE, null, ex);
         }

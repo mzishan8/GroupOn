@@ -107,6 +107,8 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="121" max="-2" attributes="0"/>
                           <Component id="btnViewProfile6" min="-2" pref="184" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="uploadImage" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -123,7 +125,10 @@
                       <Component id="jLabel27" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                  <Component id="btnViewProfile6" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnViewProfile6" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="uploadImage" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -157,6 +162,11 @@
         <Component class="javax.swing.JButton" name="btnViewProfile6">
           <Properties>
             <Property name="text" type="java.lang.String" value="VIEW COMPLETE PROFILE"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="uploadImage">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="upload Image"/>
           </Properties>
         </Component>
       </SubComponents>

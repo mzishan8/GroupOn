@@ -2,10 +2,10 @@ package ChatClient;
 
 
 import java.awt.HeadlessException;
-import java.io.DataInputStream;
-
-import java.io.DataOutputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,8 +23,8 @@ import javax.swing.JOptionPane;
  */
 public class Client {
     Socket soc=null;
-    DataOutputStream dos=null;
-    DataInputStream dis=null;
+    private BufferedReader dis;
+    private PrintWriter dos;
     Client client;
     String userName;
     /**
@@ -38,9 +38,8 @@ public class Client {
         client = this;
         try{
             String msg = "LOGIN: "+user+","+pass;
-            dos.writeUTF(msg);
-            System.out.println("Message Sent to server");
-            String res = dis.readUTF();
+            dos.println(msg);
+            String res = dis.readLine();
             if(res.equals(user)){
                 JOptionPane.showMessageDialog(null, "You are Currect User");
                 java.awt.EventQueue.invokeLater(new Runnable() {
@@ -61,19 +60,21 @@ public class Client {
     public boolean connection(String ip , int port){
             try {
                     soc=new Socket(ip,port);
-                    dos = new DataOutputStream(soc.getOutputStream());
-                    dis = new DataInputStream(soc.getInputStream());
+                    dis=new BufferedReader(new InputStreamReader(soc.getInputStream()));
+                    dos=new PrintWriter(soc.getOutputStream(),true);
                 } catch (IOException ex) {
                     Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 return soc!=null;
         }
     public String read() throws IOException{
-        return dis.readUTF();
+       String msg=dis.readLine();
+      // while((msg = dis.readLine())== null);
+        return msg;
     }
 
     public void write(String msg) throws IOException {
-        dos.writeUTF(msg);
+        dos.println(msg);
     }
     public String getUserName()
     {

@@ -52,6 +52,7 @@ public class GroupChat extends javax.swing.JFrame {
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         btnViewProfile6 = new javax.swing.JButton();
+        uploadImage = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         msgBox = new javax.swing.JTextArea();
 
@@ -95,6 +96,8 @@ public class GroupChat extends javax.swing.JFrame {
 
         btnViewProfile6.setText("VIEW COMPLETE PROFILE");
 
+        uploadImage.setText("upload Image");
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -110,7 +113,9 @@ public class GroupChat extends javax.swing.JFrame {
                         .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(121, 121, 121)
-                        .addComponent(btnViewProfile6, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnViewProfile6, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(uploadImage)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
@@ -122,7 +127,9 @@ public class GroupChat extends javax.swing.JFrame {
                     .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
-                .addComponent(btnViewProfile6)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnViewProfile6)
+                    .addComponent(uploadImage))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -250,5 +257,6 @@ class ReadMsg implements Runnable{
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea msgBox;
     private javax.swing.JPanel onlineUser;
+    private javax.swing.JButton uploadImage;
     // End of variables declaration//GEN-END:variables
 }

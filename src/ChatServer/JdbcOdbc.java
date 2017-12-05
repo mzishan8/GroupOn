@@ -32,7 +32,7 @@ public class JdbcOdbc {
         }
     }
     public boolean authentiction(String userName , String password) throws SQLException{
-            String sql="select * from GroupOn where username='"+userName+"'and password='"+password+"' ";
+            String sql="select * from Login where username='"+userName+"'and password='"+password+"' ";
             System.out.println("Authentiction of DB userName"+userName+"8");
             pst = (OraclePreparedStatement) con.prepareStatement(sql);
             //pst.setString(1, userName);
@@ -42,7 +42,7 @@ public class JdbcOdbc {
         return rs.next();
     }
     public boolean isUserExist(String user){
-        String sql="select * from GroupOn where username='"+user+"'";
+        String sql="select * from Login where username='"+user+"'";
         try {
             pst = (OraclePreparedStatement) con.prepareStatement(sql);
             rs=(OracleResultSet) pst.executeQuery();
@@ -56,12 +56,19 @@ public class JdbcOdbc {
         String details[]=msg.split(" ")[1].split(",");
         
         try {
-                String sql="insert into GroupOn values(?,?,?,?)";
+                String sql="insert into Registration values(?,?,?,?,?,?)";
+                String loginSql="insert into Login values(?,?)";
                 pst = (OraclePreparedStatement) con.prepareStatement(sql);
                 pst.setString(1, details[0]);
                 pst.setString(2, details[1]);
                 pst.setString(3, details[2]);
                 pst.setString(4, details[3]);
+                pst.setString(5, details[4]);
+                pst.setString(6, details[5]);
+                pst.executeUpdate();
+                pst = (OraclePreparedStatement) con.prepareStatement(loginSql);
+                pst.setString(1, details[3]);
+                pst.setString(2, details[4]);
                 pst.executeUpdate();
                 return true;
         } catch (SQLException ex) {
