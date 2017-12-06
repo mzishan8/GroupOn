@@ -22,7 +22,7 @@ public class Login extends javax.swing.JFrame {
      * Creates new form Login
      */
     public Login() {
-        
+        String server_ip1="192.168.31.228";
         cl=new Client();
         System.out.println("connection is creating");
         if(!cl.connection("localhost",2001)) {

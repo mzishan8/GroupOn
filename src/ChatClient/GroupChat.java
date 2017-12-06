@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
@@ -24,16 +25,22 @@ import javax.swing.SwingConstants;
  */
 public class GroupChat extends javax.swing.JFrame {
      Client client;
-     ArrayList<JLabel> onlineList;    /**
+     ArrayList<JLabel> onlineList;
+     ArrayList<JLabel> sendermsgList;
+     ArrayList<JLabel> receivermsgList;
+     int y=0;
+     /**
      * Creates new form 
      * @param client
      */
     public GroupChat(Client client) {
         initComponents();
-        jScrollPane1.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_NEVER);
+        msgPanel.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_NEVER);
         this.client=client;
         onlineList=new ArrayList<JLabel>();
-        new Thread(new ReadMsg(client,msgBox,onlineUser,onlineList)).start();
+        sendermsgList=new ArrayList<JLabel>();
+        receivermsgList=new ArrayList<JLabel>();
+        new Thread(new ReadMsg(y,client,msgPanel,onlineUser,onlineList,sendermsgList,receivermsgList)).start();
     }
 
     /**
@@ -53,8 +60,7 @@ public class GroupChat extends javax.swing.JFrame {
         jLabel27 = new javax.swing.JLabel();
         btnViewProfile6 = new javax.swing.JButton();
         uploadImage = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        msgBox = new javax.swing.JTextArea();
+        msgPanel = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(102, 102, 255));
@@ -133,10 +139,6 @@ public class GroupChat extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        msgBox.setColumns(20);
-        msgBox.setRows(5);
-        jScrollPane1.setViewportView(msgBox);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -144,9 +146,9 @@ public class GroupChat extends javax.swing.JFrame {
             .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
-                    .addComponent(chatBox))
-                .addGap(0, 0, 0)
+                    .addComponent(chatBox, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+                    .addComponent(msgPanel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(onlineUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
@@ -155,7 +157,8 @@ public class GroupChat extends javax.swing.JFrame {
                 .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(msgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
                         .addComponent(chatBox, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(onlineUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -188,14 +191,20 @@ public class GroupChat extends javax.swing.JFrame {
  }
 class ReadMsg implements Runnable{
         Client client;
-        JTextArea msgBox;
+        JScrollPane msgPanel;
         JPanel onlineUser;
         ArrayList<JLabel> onlineList;
-        public ReadMsg(Client client , JTextArea msgBox , JPanel onlineUser,ArrayList<JLabel> onlineList){
+         ArrayList<JLabel> sendermsgList;
+     ArrayList<JLabel> receivermsgList;
+        int y;
+        public ReadMsg(int y,Client client , JScrollPane msgPanel , JPanel onlineUser,ArrayList<JLabel> onlineList, ArrayList<JLabel> sendermsgList, ArrayList<JLabel> receivermsgList){
             this.client = client;
-            this.msgBox = msgBox;
+            this.y=y;
+            this.msgPanel = msgPanel;
             this.onlineUser = onlineUser;
             this.onlineList=onlineList;
+            this.sendermsgList=sendermsgList;
+            this.receivermsgList=receivermsgList;
         }
         @Override
         public void run() {
@@ -236,8 +245,36 @@ class ReadMsg implements Runnable{
                         
                     }
                     else{
-                        String oldMsg = msgBox.getText();
-                        msgBox.setText( oldMsg+"\n"+msg);
+                        msgPanel.removeAll();
+                        msgPanel.revalidate();
+                        msgPanel.repaint();
+                        JLabel msgLabel=new JLabel();
+                        msgLabel.setText(msg);
+                        msgLabel.setVisible(true);
+                        msgLabel.validate();
+                       if(!msg.split(" : ")[0].equals(client.getUserName())){
+                           msgLabel.setBounds(10,5+y*20,150,20);
+                           y++;
+                           receivermsgList.add(msgLabel);
+                       }
+                       else
+                       {
+                           
+             JLabel sendmsg = new JLabel(msg.split(" : ")[1]);
+             sendmsg.setVisible(true);
+             sendmsg.setBounds(150, 5+y*20, 150, 20);
+             sendmsg.validate();
+             y++;
+             receivermsgList.add(sendmsg);
+                       }
+                        for(int j=0;j<receivermsgList.size();j++)
+                        {
+                           // String us = receivermsgList.get(j).getText().split(":")[0];
+                            //if(!us.equals(client.getUserName()))
+                            msgPanel.add(receivermsgList.get(j));
+                        }
+                        /*String oldMsg = msgBox.getText();
+                        msgBox.setText( oldMsg+"\n"+msg);*/
                     }
                 }
             }catch(Exception ex){
@@ -254,8 +291,7 @@ class ReadMsg implements Runnable{
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea msgBox;
+    private javax.swing.JScrollPane msgPanel;
     private javax.swing.JPanel onlineUser;
     private javax.swing.JButton uploadImage;
     // End of variables declaration//GEN-END:variables
