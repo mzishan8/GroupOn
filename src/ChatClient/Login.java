@@ -21,11 +21,13 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
-    public Login() {
-        String server_ip1="192.168.31.228";
+    public Login() throws IOException {
+        new FindServerIP();
+        String server_ip1;
+        server_ip1 = FindServerIP.serverIP.split("/")[1];
         cl=new Client();
-        System.out.println("connection is creating");
-        if(!cl.connection("localhost",2001)) {
+        System.out.println("connection is creating   :"+server_ip1 );
+        if(!cl.connection(server_ip1,2002)) {
             System.out.println("connection not created");
         } else {
             JOptionPane.showMessageDialog(null, "Conection Created");
@@ -314,7 +316,11 @@ public class Login extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new Login().setVisible(true);
+            try {
+                new Login().setVisible(true);
+            } catch (IOException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
 

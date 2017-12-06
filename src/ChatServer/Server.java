@@ -26,7 +26,9 @@ public class Server {
     JdbcOdbc db;
     public Server(){
         try{
-             server = new ServerSocket(2001);
+             server = new ServerSocket(2002);
+             Thread discoveryThread = new Thread(DiscoveryThread.getInstance());
+             discoveryThread.start();
              clientList = new ArrayList<>();
         }catch(Exception ex){
             System.err.println(ex);
@@ -54,12 +56,15 @@ class ClientHandler implements Runnable{
         client = new Session(soc);
         this.clientList = clientList;
         this.db=db;
+        this.soc=soc;
         System.out.println("client Handler thread Is created");
     }
     @Override
     public void run() {
         String clientMsg = null;
         boolean accept = false;
+        String clientIP = soc.getRemoteSocketAddress().toString();
+        System.out.println("Client IP  ="+clientIP);
         do{
             clientMsg = client.read();
             if(clientMsg.startsWith("QUIT")){

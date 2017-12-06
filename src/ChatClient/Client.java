@@ -59,6 +59,7 @@ public class Client {
     }
     public boolean connection(String ip , int port){
             try {
+                    
                     soc=new Socket(ip,port);
                     dis=new BufferedReader(new InputStreamReader(soc.getInputStream()));
                     dos=new PrintWriter(soc.getOutputStream(),true);
