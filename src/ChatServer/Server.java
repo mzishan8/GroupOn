@@ -1,6 +1,8 @@
 package ChatServer;
 
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -8,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -72,6 +75,13 @@ class ClientHandler implements Runnable{
                 try {
                     if(client.disconnect())
                         return;
+                } catch (IOException ex) {
+                    Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(clientMsg.startsWith("GETPASSWORD: ")){
+                try {
+                    client.write( db.getPassword(clientMsg.split(" ")[1]));
                 } catch (IOException ex) {
                     Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
                 }

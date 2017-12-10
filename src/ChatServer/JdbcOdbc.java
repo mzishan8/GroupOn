@@ -76,4 +76,16 @@ public class JdbcOdbc {
         }
         return false;
     }
+    public String getPassword(String user){
+         String sql="select * from Login where username='"+user+"'";
+        try {
+            pst = (OraclePreparedStatement) con.prepareStatement(sql);
+            rs=(OracleResultSet) pst.executeQuery();
+            if( rs.next());
+               return rs.getString(2);
+        } catch (SQLException ex) {
+            Logger.getLogger(JdbcOdbc.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    } 
 }

@@ -57,6 +57,9 @@ public class Client {
             System.out.println(ex);
         }
     }
+    public Socket getSocket(){
+        return soc;
+    }
     public boolean connection(String ip , int port){
             try {
                     
@@ -80,5 +83,17 @@ public class Client {
     public String getUserName()
     {
         return userName;
+    }
+    public String getPassword(String user){
+        String msg = "GETPASSWORD: "+user;
+        try {
+            write(msg);
+            String res = read();
+            if(!res.equals(null))
+                return res;
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

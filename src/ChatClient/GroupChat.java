@@ -84,7 +84,7 @@ public class GroupChat extends javax.swing.JFrame {
         onlineUser.setLayout(onlineUserLayout);
         onlineUserLayout.setHorizontalGroup(
             onlineUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 161, Short.MAX_VALUE)
+            .addGap(0, 227, Short.MAX_VALUE)
         );
         onlineUserLayout.setVerticalGroup(
             onlineUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,7 +122,7 @@ public class GroupChat extends javax.swing.JFrame {
                         .addComponent(btnViewProfile6, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(uploadImage)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(178, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,7 +136,7 @@ public class GroupChat extends javax.swing.JFrame {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnViewProfile6)
                     .addComponent(uploadImage))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -146,8 +146,8 @@ public class GroupChat extends javax.swing.JFrame {
             .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(chatBox, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
-                    .addComponent(msgPanel))
+                    .addComponent(msgPanel)
+                    .addComponent(chatBox, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(onlineUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -157,13 +157,15 @@ public class GroupChat extends javax.swing.JFrame {
                 .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(msgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(msgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(chatBox, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(onlineUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
+
+        msgPanel.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -251,7 +253,7 @@ class ReadMsg implements Runnable{
                         JLabel msgLabel=new JLabel();
                         msgLabel.setText(msg);
                         msgLabel.setVisible(true);
-                        msgLabel.validate();
+                        msgLabel.setSize(msgLabel.getPreferredSize());
                        if(!msg.split(" : ")[0].equals(client.getUserName())){
                            msgLabel.setBounds(10,5+y*20,150,20);
                            y++;
@@ -260,12 +262,12 @@ class ReadMsg implements Runnable{
                        else
                        {
                            
-             JLabel sendmsg = new JLabel(msg.split(" : ")[1]);
-             sendmsg.setVisible(true);
-             sendmsg.setBounds(150, 5+y*20, 150, 20);
-             sendmsg.validate();
-             y++;
-             receivermsgList.add(sendmsg);
+                            JLabel sendmsg = new JLabel(msg.split(" : ")[1]);
+                            sendmsg.setVisible(true);
+                            sendmsg.setBounds(150, 5+y*20, 150, 20);
+                            sendmsg.validate();
+                            y++;
+                            receivermsgList.add(sendmsg);
                        }
                         for(int j=0;j<receivermsgList.size();j++)
                         {
