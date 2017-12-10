@@ -5,13 +5,22 @@
  */
 package ChatClient;
 
+
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -78,4 +87,21 @@ public class MainController {
             //dispose();
        }
     }
+    File file;
+    @FXML
+    Label fileName;
+    @FXML
+    private void chooseImageAction(ActionEvent event){
+        FileChooser chooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilejpg = new FileChooser.ExtensionFilter("jpg files (*.jpg)", "*.jpg" );
+        FileChooser.ExtensionFilter extFileJPG = new FileChooser.ExtensionFilter("JPG files (*.JPG)", "*.JPG" );
+        FileChooser.ExtensionFilter extFilepng = new FileChooser.ExtensionFilter("png files (*.png)", "*.png" );
+        FileChooser.ExtensionFilter extFilePNG = new FileChooser.ExtensionFilter("PNG files (*.PNG)", "*.PNG" );
+        chooser.getExtensionFilters().addAll(extFilejpg,extFileJPG,extFilepng,extFilePNG);
+        file =chooser.showOpenDialog(null);
+        fileName.setWrapText(true);
+        fileName.setText(file.getPath());
+        
+    } 
+   
 }

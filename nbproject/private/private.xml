@@ -4,11 +4,14 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Zishan/Documents/GitHub/GroupOn/src/ChatClient/GroupChat.java</file>
+            <file>file:/C:/Users/Zishan/Documents/GitHub/GroupOn/src/ChatClient/Main.fxml</file>
             <file>file:/C:/Users/Zishan/Documents/GitHub/GroupOn/src/ChatServer/JdbcOdbc.java</file>
-            <file>file:/C:/Users/Zishan/Documents/GitHub/GroupOn/src/ChatClient/Login.java</file>
+            <file>file:/C:/Users/Zishan/Documents/GitHub/GroupOn/src/ChatClient/Main.java</file>
             <file>file:/C:/Users/Zishan/Documents/GitHub/GroupOn/src/ChatServer/Session.java</file>
             <file>file:/C:/Users/Zishan/Documents/GitHub/GroupOn/src/ChatServer/Server.java</file>
+            <file>file:/C:/Users/Zishan/Documents/GitHub/GroupOn/src/ChatClient/ChatRoom/main.css</file>
             <file>file:/C:/Users/Zishan/Documents/GitHub/GroupOn/src/ChatClient/Client.java</file>
+            <file>file:/C:/Users/Zishan/Documents/GitHub/GroupOn/src/ChatClient/MainController.java</file>
         </group>
     </open-files>
 </project-private>

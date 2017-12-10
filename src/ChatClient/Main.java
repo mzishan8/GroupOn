@@ -5,15 +5,10 @@
  */
 package ChatClient;
 
-import java.io.IOException;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
@@ -32,7 +27,9 @@ public class Main extends Application {
             cl=new Client();
             System.out.println("connection is creating   :"+server_ip1 );
             if(!cl.connection(server_ip1,2002)) {
-            System.out.println("connection not created");
+            JOptionPane.showMessageDialog(null, "Conection Not Created");
+            System.exit(0);
+            
         } else {
             JOptionPane.showMessageDialog(null, "Conection Created");
         }
@@ -42,7 +39,7 @@ public class Main extends Application {
           Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
           Scene scene = new Scene(root);
         
-          primaryStage.setTitle("Hello World!");
+          primaryStage.setTitle("GroupOn");
           primaryStage.setScene(scene);
           primaryStage.show();
         }catch(Exception e){
