@@ -44,7 +44,7 @@ class ReadMsg implements Runnable{
         Client client = Main.cl;
         ListView<String> userList;
         ObservableList observableList = FXCollections.observableArrayList();
-        ObservableList oobservableList = FXCollections.observableArrayList();
+       // ObservableList oobservableList = FXCollections.observableArrayList();
         public ReadMsg(ListView<String> userList){
            this.userList = userList;
         }
@@ -59,9 +59,10 @@ class ReadMsg implements Runnable{
                          for(int i=0;i<users.length;i++)
                             System.out.println(users[i]);
                          
-                        observableList.addAll(users);
+                        observableList.addAll((Object) users);
+                        userList.setItems(null);
                         userList.setItems(observableList);
-                        oobservableList.setAll(observableList);
+                       
                       /* */
                        
                     }
