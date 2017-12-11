@@ -1,90 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ChatClient.MainController">
-   <center>
-      <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0">
-         <children>
-            <Pane layoutX="3.0" layoutY="1.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <TabPane layoutX="4.0" layoutY="1.0" prefHeight="392.0" prefWidth="581.0" tabClosingPolicy="UNAVAILABLE">
-                    <tabs>
-                      <Tab text="Login">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="216.0" prefWidth="253.0">
-                                 <children>
-                                    <Pane layoutX="150.0" layoutY="97.0" prefHeight="252.0" prefWidth="303.0">
-                                       <children>
-                                          <TextField fx:id="user" layoutX="103.0" layoutY="73.0" />
-                                          <PasswordField fx:id="pass" layoutX="101.0" layoutY="129.0" />
-                                          <Button layoutX="43.0" layoutY="217.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="25.0" prefWidth="74.0" text="Login" />
-                                          <Label layoutX="19.0" layoutY="73.0" prefHeight="25.0" prefWidth="66.0" text="User ID" />
-                                          <Label layoutX="15.0" layoutY="129.0" prefHeight="25.0" prefWidth="56.0" text="Password" />
-                                       </children>
-                                    </Pane>
-                                    <ImageView fitHeight="109.0" fitWidth="151.0" layoutX="228.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
-                                        <image>
-                                            <Image url="@grouOnIcon.png" />
-                                        </image>
-                                    </ImageView>
-                                 </children>
-                              </AnchorPane>
-                        </content>
-                      </Tab>
-                      <Tab text="Register">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                 <children>
-                                    <Pane prefHeight="355.0" prefWidth="318.0">
-                                       <children>
-                                          <Button layoutX="208.0" layoutY="316.0" mnemonicParsing="false" onAction="#registerAction" text="Submit" />
-                                          <Label layoutX="25.0" layoutY="26.0" text="First Name" />
-                                          <Label layoutX="25.0" layoutY="62.0" text="Last Name" />
-                                          <Label layoutX="25.0" layoutY="101.0" text="Email" />
-                                          <Label layoutX="25.0" layoutY="173.0" text="Password" />
-                                          <Label layoutX="25.0" layoutY="205.0" text="Confirm Password" />
-                                          <Label layoutX="24.0" layoutY="135.0" text="UserName" />
-                                          <Label layoutX="25.0" layoutY="241.0" prefHeight="17.0" prefWidth="61.0" text="Mobile" />
-                                          <TextField fx:id="firstName" layoutX="134.0" layoutY="22.0" />
-                                          <TextField fx:id="lastName" layoutX="134.0" layoutY="61.0" />
-                                          <TextField fx:id="emailID" layoutX="134.0" layoutY="99.0" />
-                                          <TextField fx:id="userName" layoutX="134.0" layoutY="136.0" />
-                                          <PasswordField fx:id="rpassword" layoutX="134.0" layoutY="172.0" />
-                                          <PasswordField fx:id="cunfirmPassword" layoutX="134.0" layoutY="206.0" />
-                                          <TextField fx:id="mobile" layoutX="134.0" layoutY="237.0" />
-                                       </children>
-                                    </Pane>
-                                    <Label fx:id="fileName" layoutX="360.0" layoutY="271.0" prefHeight="26.0" prefWidth="207.0" />
-                                    <Label layoutX="356.0" layoutY="276.0" prefHeight="17.0" prefWidth="201.0" />
-                                 </children>
-                              </AnchorPane>
-                        </content>
-                      </Tab>
-                    </tabs>
-                  </TabPane>
-               </children>
-            </Pane>
-         </children>
-      </AnchorPane>
-   </center>
-   <top>
-      <Label text="GroupOn" BorderPane.alignment="CENTER">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-   </top>
+<BorderPane style="-fx-background-color:black;&#10;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="ChatClient.MainController">
+  <center>
+    <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0">
+      <children>
+        <Pane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+          <children>
+            <TabPane focusTraversable="true" layoutX="4.0" layoutY="0.0" prefHeight="392.0" prefWidth="581.0" rotateGraphic="false" side="TOP" style="-fx-background-color:black;&#10;-fx-text-fill:yellow;&#10;" tabClosingPolicy="UNAVAILABLE" visible="true">
+              <tabs>
+                <Tab style="&#10;" text="Login">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="216.0" prefWidth="253.0" style="-fx-background-color:black;">
+                      <children>
+                        <Pane layoutX="150.0" layoutY="97.0" prefHeight="252.0" prefWidth="303.0" style="-fx-background-color:black;&#10;">
+                          <children>
+                            <TextField fx:id="user" layoutX="103.0" layoutY="73.0" />
+                            <PasswordField fx:id="pass" layoutX="101.0" layoutY="129.0" />
+                            <Button layoutX="103.0" layoutY="178.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="38.62109375" prefWidth="106.0" style="-fx-background-color: &#10;        linear-gradient(#ffd65b, #e68400),&#10;        linear-gradient(#ffef84, #f2ba44),&#10;        linear-gradient(#ffea6a, #efaa22),&#10;        linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%),&#10;        linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));&#10;    -fx-background-radius: 30;&#10;    -fx-background-insets: 0,1,2,3,0;&#10;    -fx-text-fill: #654b00;&#10;    -fx-font-weight: bold;&#10;    -fx-font-size: 14px;&#10;    -fx-padding: 10 20 10 20;" text="Login" />
+                            <Label layoutX="19.0" layoutY="73.0" prefHeight="25.0" prefWidth="66.0" style="-fx-text-fill:yellow;&#10;" text="User ID">
+                              <font>
+                                <Font name="Times New Roman Bold Italic" size="16.0" fx:id="x1" />
+                              </font>
+                            </Label>
+                            <Label font="$x1" layoutX="15.0" layoutY="129.0" prefHeight="25.0" prefWidth="78.0" style="-fx-text-fill:yellow;&#10;" text="Password" />
+                          </children>
+                        </Pane>
+                        <ImageView fitHeight="109.0" fitWidth="151.0" layoutX="253.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                            <Image url="@grouOnIcon.png" />
+                          </image>
+                        </ImageView>
+                      </children>
+                    </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab style="&#10;" text="Register">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                      <children>
+                        <Pane prefHeight="355.0" prefWidth="318.0">
+                          <children>
+                            <Button layoutX="208.0" layoutY="316.0" mnemonicParsing="false" onAction="#registerAction" text="Submit" />
+                            <Label layoutX="25.0" layoutY="26.0" text="First Name" />
+                            <Label layoutX="25.0" layoutY="62.0" text="Last Name" />
+                            <Label layoutX="25.0" layoutY="101.0" text="Email" />
+                            <Label layoutX="25.0" layoutY="173.0" text="Password" />
+                            <Label layoutX="25.0" layoutY="205.0" text="Confirm Password" />
+                            <Label layoutX="24.0" layoutY="135.0" text="UserName" />
+                            <Label layoutX="25.0" layoutY="241.0" prefHeight="17.0" prefWidth="61.0" text="Mobile" />
+                            <TextField fx:id="firstName" layoutX="134.0" layoutY="22.0" />
+                            <TextField fx:id="lastName" layoutX="134.0" layoutY="61.0" />
+                            <TextField fx:id="emailID" layoutX="134.0" layoutY="99.0" />
+                            <TextField fx:id="userName" layoutX="134.0" layoutY="136.0" />
+                            <PasswordField fx:id="rpassword" layoutX="134.0" layoutY="172.0" />
+                            <PasswordField fx:id="cunfirmPassword" layoutX="134.0" layoutY="206.0" />
+                            <TextField fx:id="mobile" layoutX="134.0" layoutY="237.0" />
+                          </children>
+                        </Pane>
+                        <Label fx:id="fileName" layoutX="360.0" layoutY="271.0" prefHeight="26.0" prefWidth="207.0" />
+                        <Label layoutX="356.0" layoutY="276.0" prefHeight="17.0" prefWidth="201.0" />
+                      </children>
+                    </AnchorPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+          </children>
+        </Pane>
+      </children>
+    </AnchorPane>
+  </center>
+  <top>
+    <Label style="-fx-text-fill:yellow;" text="GroupOn" BorderPane.alignment="CENTER">
+      <font>
+        <Font name="Comic Sans MS Bold" size="26.0" />
+      </font>
+    </Label>
+  </top>
 </BorderPane>
