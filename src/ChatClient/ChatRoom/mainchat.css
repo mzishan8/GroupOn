@@ -1,0 +1,6 @@
+/*
+ * Empty Stylesheet file.
+ */
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: black;
+}

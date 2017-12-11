@@ -5,10 +5,12 @@
  */
 package ChatClient;
 
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
@@ -18,6 +20,7 @@ import javax.swing.JOptionPane;
  */
 public class Main extends Application {
    public static Client cl = null;
+   public static BorderPane root;
     @Override
     public void start(Stage primaryStage) {
          try{
@@ -36,7 +39,7 @@ public class Main extends Application {
        
        
        // StackPane root = new StackPane();
-          Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
+          root = FXMLLoader.load(getClass().getResource("Main.fxml"));
           Scene scene = new Scene(root);
         
           primaryStage.setTitle("GroupOn");
@@ -45,6 +48,12 @@ public class Main extends Application {
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+    public static void loadChatWindo() throws IOException{
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Main.class.getResource("ChatRoom/MainChat.fxml"));
+        BorderPane chat = loader.load();
+        root.setCenter(chat);
     }
 
     /**
