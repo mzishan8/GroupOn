@@ -18,7 +18,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane style="-fx-background-color:black;&#10;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="ChatClient.MainController">
+<BorderPane style="-fx-background-color:#4D77A7;&#10;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="ChatClient.MainController">
   <center>
     <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0">
       <children>
@@ -28,24 +28,24 @@
               <tabs>
                 <Tab style="&#10;" text="Login">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="216.0" prefWidth="253.0" style="-fx-background-color:black;">
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="216.0" prefWidth="253.0" style="-fx-background-color:#4D77A7;">
                       <children>
-                        <Pane layoutX="150.0" layoutY="97.0" prefHeight="252.0" prefWidth="303.0" style="-fx-background-color:black;&#10;">
+                        <Pane layoutX="150.0" layoutY="31.0" prefHeight="299.0" prefWidth="347.0" style="-fx-background-color:white;">
                           <children>
-                            <TextField fx:id="user" layoutX="103.0" layoutY="73.0" />
-                            <PasswordField fx:id="pass" layoutX="101.0" layoutY="129.0" />
-                            <Button layoutX="103.0" layoutY="178.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="38.62109375" prefWidth="106.0" style="-fx-background-color: &#10;        linear-gradient(#ffd65b, #e68400),&#10;        linear-gradient(#ffef84, #f2ba44),&#10;        linear-gradient(#ffea6a, #efaa22),&#10;        linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%),&#10;        linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));&#10;    -fx-background-radius: 30;&#10;    -fx-background-insets: 0,1,2,3,0;&#10;    -fx-text-fill: #654b00;&#10;    -fx-font-weight: bold;&#10;    -fx-font-size: 14px;&#10;    -fx-padding: 10 20 10 20;" text="Login" />
-                            <Label layoutX="19.0" layoutY="73.0" prefHeight="25.0" prefWidth="66.0" style="-fx-text-fill:yellow;&#10;" text="User ID">
+                            <TextField fx:id="user" layoutX="122.0" layoutY="120.0" opacity="0.22" style="-fx-background-color:gray;&#10;-fx-text-fill:white;" />
+                            <PasswordField fx:id="pass" layoutX="122.0" layoutY="173.0" opacity="0.22" style="-fx-background-color:gray;&#10;-fx-text-fill:white;" />
+                            <Button layoutX="122.0" layoutY="221.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="38.62109375" prefWidth="106.0" style="-fx-background-color: &#10;        #000000,&#10;        linear-gradient(#7ebcea, #2f4b8f),&#10;        linear-gradient(#426ab7, #263e75),&#10;        linear-gradient(#395cab, #223768);&#10;    -fx-background-insets: 0,1,2,3;&#10;    -fx-background-radius: 3,2,2,2;&#10;    -fx-padding: 12 30 12 30;&#10;    -fx-text-fill: white;&#10;    -fx-font-size: 12px;" text="Login" />
+                            <Label layoutX="27.0" layoutY="120.0" prefHeight="25.0" prefWidth="66.0" style="-fx-text-fill:#4597F9;" text="User ID">
                               <font>
-                                <Font name="Times New Roman Bold Italic" size="16.0" fx:id="x1" />
+                                <Font name="Times New Roman Bold" size="16.0" fx:id="x1" />
                               </font>
                             </Label>
-                            <Label font="$x1" layoutX="15.0" layoutY="129.0" prefHeight="25.0" prefWidth="78.0" style="-fx-text-fill:yellow;&#10;" text="Password" />
+                            <Label font="$x1" layoutX="27.0" layoutY="173.0" prefHeight="25.0" prefWidth="78.0" style="-fx-text-fill:#4597F9;" text="Password" />
                           </children>
                         </Pane>
-                        <ImageView fitHeight="109.0" fitWidth="151.0" layoutX="253.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="109.0" fitWidth="151.0" layoutX="272.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
                           <image>
-                            <Image url="@grouOnIcon.png" />
+                            <Image url="@images/chat-bubble.png" />
                           </image>
                         </ImageView>
                       </children>
@@ -89,9 +89,9 @@
     </AnchorPane>
   </center>
   <top>
-    <Label style="-fx-text-fill:yellow;" text="GroupOn" BorderPane.alignment="CENTER">
+    <Label style="-fx-text-fill:white;" text="GroupOn" BorderPane.alignment="CENTER">
       <font>
-        <Font name="Comic Sans MS Bold" size="26.0" />
+        <Font name="Arial Bold" size="34.0" />
       </font>
     </Label>
   </top>
