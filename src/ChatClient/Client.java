@@ -32,7 +32,7 @@ public class Client {
      * @param user
      * @param pass
      */
-    public void  login(String user , String pass) {
+    public boolean  login(String user , String pass) {
         userName=user;
         System.out.println("Login Function of Cleint class Is Called");
         client = this;
@@ -42,20 +42,17 @@ public class Client {
             String res = dis.readLine();
             if(res.equals(user)){
                 JOptionPane.showMessageDialog(null, "You are Currect User");
-                java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new GroupChat(client).setVisible(true);
-            }
-        });
+              return true;
                // rdth.start();
             }
             else{
                 JOptionPane.showMessageDialog(null, "You are Not Currect User");
+                return false;
             }
         }catch(IOException | HeadlessException ex){
             System.out.println(ex);
         }
+        return false;
     }
     public Socket getSocket(){
         return soc;

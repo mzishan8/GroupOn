@@ -38,10 +38,18 @@ public class MainController {
      * @param event
      */
     @FXML
-    private void loginAction(ActionEvent event){
+    private void loginAction(ActionEvent event) throws IOException{
         System.out.println(pass.getText());
-        Main.cl.login(user.getText(), pass.getText());
-       //String password = Main.cl.getPassword(user.getText());
+     
+     boolean flag = Main.cl.login(user.getText(), pass.getText());
+     if(flag){
+         Main.loadChatWindo();
+     }
+     else{
+         pass.setText("");
+         user.setText("");
+     }
+     //String password = Main.cl.getPassword(user.getText());
        //System.out.println(user.getText()+" "+password);
     }
     @FXML
