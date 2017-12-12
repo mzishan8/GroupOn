@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -20,7 +21,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ListView fx:id="userList" layoutX="7.0" layoutY="7.0" prefHeight="252.0" prefWidth="186.0" />
+                        <ListView fx:id="userList" layoutX="7.0" layoutY="7.0" onMouseClicked="#listClicked" prefHeight="252.0" prefWidth="186.0" />
                      </children>
                   </AnchorPane>
             </content>
@@ -41,13 +42,19 @@
    <top>
       <Pane prefHeight="103.0" prefWidth="298.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="92.0" fitWidth="90.0" layoutX="7.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
-            <Label layoutX="112.0" layoutY="52.0" prefHeight="17.0" prefWidth="86.0" text="Label" />
+            <ImageView fx:id="myPic" fitHeight="92.0" fitWidth="90.0" layoutX="7.0" layoutY="6.0" onMouseClicked="#profilePicSet" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../user-default.png" />
+               </image></ImageView>
+            <Label fx:id="userName" layoutX="112.0" layoutY="52.0" prefHeight="17.0" prefWidth="86.0" text="Label" />
             <Separator fx:id="chatPSeprator" layoutX="200.0" layoutY="104.0" prefHeight="5.0" prefWidth="396.0" />
             <Pane fx:id="fPPane" layoutX="194.0" layoutY="3.0" prefHeight="100.0" prefWidth="404.0">
                <children>
-                  <ImageView fitHeight="94.0" fitWidth="95.0" layoutX="26.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label layoutX="163.0" layoutY="42.0" prefHeight="17.0" prefWidth="137.0" text="Label" />
+                  <ImageView fitHeight="94.0" fitWidth="95.0" layoutX="26.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../user-default.png" />
+                     </image></ImageView>
+                  <Label fx:id="chatUser" layoutX="163.0" layoutY="42.0" prefHeight="17.0" prefWidth="137.0" text="Label" />
                   <Separator layoutX="3.0" layoutY="3.0" orientation="VERTICAL" prefHeight="96.0" prefWidth="0.0" />
                </children>
             </Pane>
@@ -57,10 +64,10 @@
    <center>
       <Pane fx:id="chatPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField layoutX="14.0" layoutY="258.0" prefHeight="25.0" prefWidth="248.0" />
-            <Button layoutX="275.0" layoutY="258.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="334.0" layoutY="258.0" mnemonicParsing="false" text="Button" />
-            <ListView layoutX="14.0" layoutY="14.0" prefHeight="232.0" prefWidth="372.0" />
+            <TextField fx:id="message" layoutX="14.0" layoutY="258.0" prefHeight="25.0" prefWidth="248.0" />
+            <Button layoutX="275.0" layoutY="258.0" mnemonicParsing="false" onAction="#sendAction" text="Send" />
+            <Button layoutX="334.0" layoutY="258.0" mnemonicParsing="false" text="Attach" />
+            <ListView fx:id="msgList" layoutX="14.0" layoutY="14.0" prefHeight="232.0" prefWidth="372.0" />
          </children>
       </Pane>
    </center>

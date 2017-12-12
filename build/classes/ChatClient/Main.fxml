@@ -1,58 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane style="-fx-background-color:#4D77A7;&#10;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="ChatClient.MainController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ChatClient.MainController">
   <center>
     <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0">
       <children>
         <Pane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
           <children>
-            <TabPane focusTraversable="true" layoutX="4.0" layoutY="0.0" prefHeight="392.0" prefWidth="581.0" rotateGraphic="false" side="TOP" style="-fx-background-color:black;&#10;-fx-text-fill:yellow;&#10;" tabClosingPolicy="UNAVAILABLE" visible="true">
+            <TabPane focusTraversable="true" layoutX="4.0" layoutY="0.0" prefHeight="392.0" prefWidth="581.0" rotateGraphic="false" side="TOP" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab style="&#10;" text="Login">
+                <Tab text="Login">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="216.0" prefWidth="253.0" style="-fx-background-color:#4D77A7;">
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="216.0" prefWidth="253.0">
                       <children>
-                        <Pane layoutX="150.0" layoutY="31.0" prefHeight="299.0" prefWidth="347.0" style="-fx-background-color:white;">
+                        <Pane layoutX="150.0" layoutY="31.0" prefHeight="299.0" prefWidth="347.0">
                           <children>
-                            <TextField fx:id="user" layoutX="122.0" layoutY="120.0" opacity="0.22" style="-fx-background-color:gray;&#10;-fx-text-fill:white;" />
-                            <PasswordField fx:id="pass" layoutX="122.0" layoutY="173.0" opacity="0.22" style="-fx-background-color:gray;&#10;-fx-text-fill:white;" />
-                            <Button layoutX="122.0" layoutY="221.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="38.62109375" prefWidth="106.0" style="-fx-background-color: &#10;        #000000,&#10;        linear-gradient(#7ebcea, #2f4b8f),&#10;        linear-gradient(#426ab7, #263e75),&#10;        linear-gradient(#395cab, #223768);&#10;    -fx-background-insets: 0,1,2,3;&#10;    -fx-background-radius: 3,2,2,2;&#10;    -fx-padding: 12 30 12 30;&#10;    -fx-text-fill: white;&#10;    -fx-font-size: 12px;" text="Login" />
-                            <Label layoutX="27.0" layoutY="120.0" prefHeight="25.0" prefWidth="66.0" style="-fx-text-fill:#4597F9;" text="User ID">
+                            <TextField fx:id="user" layoutX="122.0" layoutY="120.0" />
+                            <PasswordField fx:id="pass" layoutX="122.0" layoutY="173.0" />
+                            <Button layoutX="122.0" layoutY="221.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="38.62109375" prefWidth="106.0" text="Login" />
+                            <Label layoutX="27.0" layoutY="120.0" prefHeight="25.0" prefWidth="66.0" text="User ID">
                               <font>
                                 <Font name="Times New Roman Bold" size="16.0" fx:id="x1" />
                               </font>
                             </Label>
-                            <Label font="$x1" layoutX="27.0" layoutY="173.0" prefHeight="25.0" prefWidth="78.0" style="-fx-text-fill:#4597F9;" text="Password" />
+                            <Label font="$x1" layoutX="27.0" layoutY="173.0" prefHeight="25.0" prefWidth="78.0" text="Password" />
                           </children>
                         </Pane>
                         <ImageView fitHeight="109.0" fitWidth="151.0" layoutX="272.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
                           <image>
-                            <Image url="@images/chat-bubble.png" />
+                            <Image url="@grouOnIcon.png" />
                           </image>
                         </ImageView>
                       </children>
                     </AnchorPane>
                   </content>
                 </Tab>
-                <Tab style="&#10;" text="Register">
+                <Tab text="Register">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
@@ -89,7 +84,7 @@
     </AnchorPane>
   </center>
   <top>
-    <Label style="-fx-text-fill:white;" text="GroupOn" BorderPane.alignment="CENTER">
+    <Label text="GroupOn" BorderPane.alignment="CENTER">
       <font>
         <Font name="Arial Bold" size="34.0" />
       </font>
