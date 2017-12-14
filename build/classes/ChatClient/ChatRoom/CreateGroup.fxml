@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ChatClient.ChatRoom.CreateGroupController">
+   <center>
+      <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="226.0" styleClass="mainFxmlClass">
+          <stylesheets>
+              <URL value="@creategroup.css" />
+          </stylesheets>
+         <children>
+            <ListView fx:id="userList" layoutX="14.0" layoutY="45.0" prefHeight="294.0" prefWidth="200.0" />
+            <TextField fx:id="groupName" layoutX="15.0" layoutY="14.0" prefHeight="25.0" prefWidth="200.0" />
+            <Button fx:id="create" layoutX="15.0" layoutY="354.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="85.0" text="Create" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

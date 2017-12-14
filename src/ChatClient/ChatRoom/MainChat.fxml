@@ -6,14 +6,14 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ChatClient.ChatRoom.MainChatController">
+<BorderPane prefHeight="600.0" prefWidth="800.0" stylesheets="@mainchat.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ChatClient.ChatRoom.MainChatController">
    <left>
       <TabPane prefHeight="277.0" prefWidth="193.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -21,7 +21,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ListView fx:id="userList" layoutX="7.0" layoutY="7.0" onMouseClicked="#listClicked" prefHeight="252.0" prefWidth="186.0" />
+                        <ListView fx:id="userList" layoutX="7.0" layoutY="7.0" onMouseClicked="#listClicked" prefHeight="459.0" prefWidth="186.0" />
                      </children>
                   </AnchorPane>
             </content>
@@ -30,8 +30,8 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button layoutX="98.0" layoutY="229.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Create Group" />
-                        <ListView layoutX="5.0" layoutY="14.0" prefHeight="206.0" prefWidth="187.0" />
+                        <Button fx:id="createGroup" layoutX="97.0" layoutY="435.0" mnemonicParsing="false" onAction="#createGroupAction" prefHeight="25.0" prefWidth="88.0" text="Create Group" />
+                        <ListView fx:id="groupList" layoutX="5.0" layoutY="14.0" prefHeight="418.0" prefWidth="187.0" />
                      </children>
                   </AnchorPane>
             </content>
@@ -47,7 +47,7 @@
                   <Image url="@../user-default.png" />
                </image></ImageView>
             <Label fx:id="userName" layoutX="112.0" layoutY="52.0" prefHeight="17.0" prefWidth="86.0" text="Label" />
-            <Separator fx:id="chatPSeprator" layoutX="200.0" layoutY="104.0" prefHeight="5.0" prefWidth="396.0" />
+            <Separator fx:id="chatPSeprator" layoutX="200.0" layoutY="106.0" prefHeight="3.0" prefWidth="598.0" />
             <Pane fx:id="fPPane" layoutX="194.0" layoutY="3.0" prefHeight="100.0" prefWidth="404.0">
                <children>
                   <ImageView fitHeight="94.0" fitWidth="95.0" layoutX="26.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
@@ -64,10 +64,9 @@
    <center>
       <Pane fx:id="chatPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="message" layoutX="14.0" layoutY="258.0" prefHeight="25.0" prefWidth="248.0" />
-            <Button layoutX="275.0" layoutY="258.0" mnemonicParsing="false" onAction="#sendAction" text="Send" />
-            <Button layoutX="334.0" layoutY="258.0" mnemonicParsing="false" text="Attach" />
-            <ListView fx:id="msgList" layoutX="14.0" layoutY="14.0" prefHeight="232.0" prefWidth="372.0" />
+            <Button layoutX="489.0" layoutY="449.0" mnemonicParsing="false" onAction="#sendAction" prefHeight="32.0" prefWidth="43.0" text="Send" />
+            <Button layoutX="548.0" layoutY="449.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="51.0" text="Attach" />
+            <TextArea fx:id="message" layoutX="14.0" layoutY="447.0" prefHeight="37.0" prefWidth="463.0" wrapText="true" />
          </children>
       </Pane>
    </center>

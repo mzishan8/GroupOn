@@ -122,7 +122,7 @@ class ClientHandler implements Runnable{
             try {
                 if(msg==null)
                     break;
-                broadcast(client.getUserName()+" : "+msg);
+                broadcast(client.getUserName()+": "+msg);
             } catch (IOException ex) {
                 Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
             }

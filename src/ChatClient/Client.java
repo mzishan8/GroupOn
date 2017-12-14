@@ -70,6 +70,7 @@ public class Client {
         }
     public String read() throws IOException{
        String msg=dis.readLine();
+       System.out.println("message  = "+msg);
       // while((msg = dis.readLine())== null);
         return msg;
     }
