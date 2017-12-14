@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -47,6 +48,7 @@ public class MainChatController implements Initializable{
      
     ObservableList observableList = FXCollections.observableArrayList();
     HashMap<String,ListView<GridPane>> userContainer;
+    HashMap<String, String> groupContainer;
     @FXML
     Pane chatPane;
     @FXML
@@ -59,23 +61,44 @@ public class MainChatController implements Initializable{
     ListView<String> userList;
     @FXML
     Label chatUser;
+    @FXML
+    Button send;
+    @FXML
+    TextArea message;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         userContainer = new HashMap<>();
+        groupContainer = new HashMap<>();
         chatPane.setVisible(false);
         fPPane.setVisible(false);
         chatPSeprator.setVisible(false);
        // Platform.runLater(() -> {
         userName.setText(Main.cl.getUserName());
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                   send.disableProperty().bind(
+                  Bindings.createBooleanBinding( () -> 
+                 message.getText().trim().isEmpty(), message.textProperty()
+               )
+             );
+            }
+        });
+
         //});
-        new Thread (new ReadMsg(userList,observableList,userName.getText(),userContainer,chatPane)).start();
+        new Thread (new ReadMsg(groupContainer,groupList,userList,observableList,userName.getText(),userContainer,chatPane)).start();
     }
-    @FXML
-    TextArea message;
+    
     @FXML
     private void sendAction(ActionEvent event) throws IOException{
-        if(!message.equals(null)){
+        if(!message.getText().trim().equals(null)){
+        if(groupContainer.get(chatUser.getText())!=null)
+        {
+             Main.cl.write(message.getText()+";"+"Group-"+chatUser.getText());
+        }
+        else {
            Main.cl.write(message.getText()+";"+chatUser.getText());
+        }
            String destinationUser = chatUser.getText();
            ListView<GridPane> msgList = userContainer.get(destinationUser);
            GridPane gp = new GridPane();
@@ -83,6 +106,8 @@ public class MainChatController implements Initializable{
            c1.setPercentWidth(100);
            gp.getColumnConstraints().add(c1);
            Label newLabel = new Label(message.getText());
+           newLabel.setMaxWidth(400);
+           newLabel.setWrapText(true);
            message.setText("");
            newLabel.getStyleClass().add("chat-bubble-send");
            GridPane.setHalignment(newLabel, HPos.RIGHT);
@@ -110,6 +135,29 @@ public class MainChatController implements Initializable{
            });
         }     
     }
+    @FXML
+   private void groupListClicked(MouseEvent e)
+   {
+         chatPane.setVisible(true);
+         fPPane.setVisible(true);
+         String groupName =  groupList.getSelectionModel().getSelectedItem();
+         ListView<GridPane> selectedUserList = userContainer.get(groupName);
+        for(Map.Entry selectedUserList1 : userContainer.entrySet()){
+         ListView<GridPane> lis =   (ListView<GridPane>) selectedUserList1.getValue();
+         lis.setVisible(false);
+        }
+        selectedUserList.setVisible(true);
+        //System.out.println(user);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                chatUser.setText(groupName);//To change body of generated methods, choose Tools | Templates.
+                
+            }
+        });
+         
+         
+   }
     @FXML
     private void listClicked(MouseEvent e){
         chatPane.setVisible(true);
@@ -149,7 +197,7 @@ public class MainChatController implements Initializable{
 //        });
     }
     @FXML
-    ListView groupList;
+    ListView<String> groupList;
     @FXML
     Button createGroup;
     @FXML
@@ -164,13 +212,17 @@ public class MainChatController implements Initializable{
 }
 class ReadMsg extends Task<Integer>{
        Pane chatPane;
+       HashMap<String, String> groupContainer;
        ObservableList observableList;
         Client client = Main.cl;     
         ListView<String> userList;
         HashMap<String, ListView<GridPane>> userContainer; 
         String userName;
-    public ReadMsg(ListView<String> userList , ObservableList observableList,String userName,HashMap<String, ListView<GridPane>> userContainer , Pane chatPane) {
+        ListView<String> groupList;
+    public ReadMsg(HashMap<String, String> groupContainer,ListView<String> groupList,ListView<String> userList , ObservableList observableList,String userName,HashMap<String, ListView<GridPane>> userContainer , Pane chatPane) {
         this.chatPane = chatPane;
+        this.groupContainer=groupContainer;
+        this.groupList=groupList;
         this.userList= userList;
         this.userContainer = userContainer;
         this.observableList = observableList;
@@ -182,7 +234,11 @@ class ReadMsg extends Task<Integer>{
         while(true){
              String msg = client.read();
              System.out.println("int read thread  =  "+msg);
-             if(msg.startsWith("USERLIST: ")){
+             if(msg.startsWith("GroupCreateRequest:")){
+                 msg=msg.split(":")[1];
+                 createGroup(msg);
+             }
+             else if(msg.startsWith("USERLIST: ")){
                synchronized(this) {
                  observableList.clear();
                  String users[] = msg.split(" ")[1].split(",");
@@ -197,11 +253,13 @@ class ReadMsg extends Task<Integer>{
                           System.out.println("why here ..... in  list creatin   ");
                           ListView<GridPane> newListView =  new ListView<>();
                           newListView.setPrefSize(585, 419);
+                          newListView.setLayoutX(12);
+                          newListView.setLayoutY(36);
                           newListView.setVisible(false);
                           Platform.runLater(() ->{
                           chatPane.getChildren().add(newListView);
                            //msgList.scrollTo(msgList.getItems().size()-1);
-                      newListView.setMouseTransparent( true );
+                     // newListView.setMouseTransparent( true );
                      // newListView.setFocusTraversable( false );
                           });
                           userContainer.put(str,newListView);
@@ -231,14 +289,52 @@ class ReadMsg extends Task<Integer>{
              }
           }
         }
+    synchronized private void createGroup(String msg)
+    {
+        String user[] = msg.split(",");
+        String groupName = user[0] ;
+        
+        for(String str : user)
+        {
+            if(str.equals(groupName))
+                continue;
+            if(client.getUserName().equals(str)){
+                  groupContainer.put(groupName,msg);
+                   Platform.runLater(new Runnable() {
+                     @Override
+                     public void run() {
+                            groupList.getItems().add(groupName);
+                         }
+                     });
+                   ListView<GridPane> newListView =  new ListView<>();
+                          newListView.setPrefSize(585, 419);
+                          newListView.setLayoutX(12);
+                          newListView.setLayoutY(32);
+                          newListView.setVisible(false);
+                          Platform.runLater(() ->{
+                          chatPane.getChildren().add(newListView);
+                          });
+                          userContainer.put(groupName,newListView);
+            }
+        }
+        
+    }
     synchronized private void writeSingleUser(String msg){
         synchronized(this){
                  System.out.println("ChatClien :msg   :"+msg);
                  String msgUser = msg.split(";")[1];
-                 System.out.println("ChatClien :msg   :"+msg);
-                 String destinationUser = msg.split(":")[0];
-                 msg = msg.split(";")[0];
-                 msg = msg.split(":")[1];
+                 String destinationUser=null;
+                 //System.out.println("ChatClien :msg   :"+msg);
+                 if(msgUser.startsWith("Group-")){
+                     msgUser = msgUser.split("-")[1];
+                     writeInGroup(msg , msgUser);
+                     return;
+                 }
+                 else{
+                  destinationUser = msg.split(":")[0];
+                  msg = msg.split(";")[0];
+                  msg = msg.split(":")[1];
+                 }
                  ListView<GridPane> msgList = userContainer.get(destinationUser);
                 // System.out.println("ChatClien :msg after split :"+msg);
                  if(msgList!=null && msgUser.equals(client.getUserName())){
@@ -248,6 +344,8 @@ class ReadMsg extends Task<Integer>{
                     c1.setPercentWidth(100);
                     gp.getColumnConstraints().add(c1);
                     Label newLabel = new Label(msg);
+                    newLabel.setMaxWidth(400);
+                    newLabel.setWrapText(true);
                     newLabel.getStyleClass().add("chat-bubble-recieve");
                     
                     GridPane.setHalignment(newLabel, HPos.LEFT);
@@ -274,6 +372,42 @@ class ReadMsg extends Task<Integer>{
                      System.out.println("ChatClient.ChatRoom.ReadMsg.call()  list update");
              }
     }
+    private void writeInGroup(String msg , String msgUser){
+               msg =  msg.split(";")[0];
+                 ListView<GridPane> msgList = userContainer.get(msgUser);
+                // System.out.println("ChatClien :msg after split :"+msg);
+                 if(msgList!=null ){
+                    Label msgLabel = new Label(msg);
+                    GridPane gp = new GridPane();
+                    ColumnConstraints c1 = new ColumnConstraints();
+                    c1.setPercentWidth(100);
+                    gp.getColumnConstraints().add(c1);
+                    Label newLabel = new Label(msg);
+                    newLabel.setMaxWidth(400);
+                    newLabel.setWrapText(true);
+                    newLabel.getStyleClass().add("chat-bubble-recieve");
+                    
+                    GridPane.setHalignment(newLabel, HPos.LEFT);
+                    gp.addRow(0, newLabel);
+                    Platform.runLater(() -> { 
+                      msgList.getItems().add(gp);
+                      msgList.scrollTo(msgList.getItems().size()-1);
+                      msgList.setCellFactory(param -> new ListCell<GridPane>(){
+                       {
+                           prefWidthProperty().bind(msgList.widthProperty().subtract(2));
+                            setMaxWidth(Control.USE_PREF_SIZE);
+                       }
+
+                       @Override
+                       protected void updateItem(GridPane item, boolean empty) {
+                           super.updateItem(item, empty); //To change body of generated methods, choose Tools | Templates.
+                           setGraphic(item);
+                       }
+                       
+                   });
+                 });
+                 }
     }
+ }
    
     

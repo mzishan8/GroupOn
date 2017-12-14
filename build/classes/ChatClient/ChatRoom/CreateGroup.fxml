@@ -15,9 +15,9 @@
               <URL value="@creategroup.css" />
           </stylesheets>
          <children>
-            <ListView fx:id="userList" layoutX="14.0" layoutY="45.0" prefHeight="294.0" prefWidth="200.0" />
             <TextField fx:id="groupName" layoutX="15.0" layoutY="14.0" prefHeight="25.0" prefWidth="200.0" />
-            <Button fx:id="create" layoutX="15.0" layoutY="354.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="85.0" text="Create" />
+            <ListView fx:id="userList" layoutX="14.0" layoutY="45.0" prefHeight="294.0" prefWidth="200.0" />
+            <Button fx:id="create" layoutX="15.0" layoutY="354.0" mnemonicParsing="false" onAction="#createButtonAction" prefHeight="34.0" prefWidth="85.0" text="Create" />
          </children>
       </AnchorPane>
    </center>

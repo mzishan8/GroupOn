@@ -31,7 +31,7 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <Button fx:id="createGroup" layoutX="97.0" layoutY="435.0" mnemonicParsing="false" onAction="#createGroupAction" prefHeight="25.0" prefWidth="88.0" text="Create Group" />
-                        <ListView fx:id="groupList" layoutX="5.0" layoutY="14.0" prefHeight="418.0" prefWidth="187.0" />
+                        <ListView fx:id="groupList" layoutX="5.0" layoutY="14.0" onMouseClicked="#groupListClicked" prefHeight="418.0" prefWidth="187.0" />
                      </children>
                   </AnchorPane>
             </content>
@@ -64,7 +64,7 @@
    <center>
       <Pane fx:id="chatPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="489.0" layoutY="449.0" mnemonicParsing="false" onAction="#sendAction" prefHeight="32.0" prefWidth="43.0" text="Send" />
+            <Button fx:id="send" layoutX="489.0" layoutY="449.0" mnemonicParsing="false" onAction="#sendAction" prefHeight="32.0" prefWidth="43.0" text="Send" />
             <Button layoutX="548.0" layoutY="449.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="51.0" text="Attach" />
             <TextArea fx:id="message" layoutX="14.0" layoutY="447.0" prefHeight="37.0" prefWidth="463.0" wrapText="true" />
          </children>

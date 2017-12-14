@@ -118,10 +118,22 @@ class ClientHandler implements Runnable{
         }while(!accept);
       while(true){
           String msg = client.read();
-          
-            try {
-                if(msg==null)
+          System.out.println("ChatServer.ClientHandler.run()dsfsfdfsfsf");
+            if(msg.startsWith("GroupCreateRequest:")){
+                System.out.println("group create condtion ="+msg);
+              try {
+                  broadcast(msg);
+              } catch (IOException ex) {
+                  Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+              }
+              continue;
+            }
+            
+            else if(msg.equals("exit@rr")){
+                System.out.println("ChatServer.ClientHandler.run()");
                     break;
+            }
+              try {
                 broadcast(client.getUserName()+": "+msg);
             } catch (IOException ex) {
                 Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);

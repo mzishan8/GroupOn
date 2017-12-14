@@ -7,6 +7,8 @@ package ChatClient;
 
 import ChatClient.ChatRoom.CreateGroupController;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -48,6 +50,12 @@ public class Main extends Application {
          primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
          @Override
         public void handle(WindowEvent e) {
+          
+             try {
+                 Main.cl.write("exit@rr");
+             } catch (IOException ex) {
+                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+             }
           Platform.exit();
           System.exit(0);
        }
