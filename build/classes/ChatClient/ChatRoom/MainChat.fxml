@@ -65,7 +65,7 @@
       <Pane fx:id="chatPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="send" layoutX="489.0" layoutY="449.0" mnemonicParsing="false" onAction="#sendAction" prefHeight="32.0" prefWidth="43.0" text="Send" />
-            <Button layoutX="548.0" layoutY="449.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="51.0" text="Attach" />
+            <Button layoutX="548.0" layoutY="449.0" mnemonicParsing="false" onAction="#sendAttachment" prefHeight="32.0" prefWidth="51.0" text="Attach" />
             <TextArea fx:id="message" layoutX="14.0" layoutY="447.0" prefHeight="37.0" prefWidth="463.0" wrapText="true" />
          </children>
       </Pane>

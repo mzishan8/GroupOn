@@ -39,10 +39,15 @@ public class MainController {
      */
     @FXML
     private void loginAction(ActionEvent event) throws IOException{
-        System.out.println(pass.getText());
-     
-     boolean flag = Main.cl.login(user.getText(), pass.getText());
+        System.out.println(pass.getText());     
+     boolean flag=false;
+        try {
+            flag = Main.cl.login(user.getText(), pass.getText());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
      if(flag){
+         
          Main.loadChatWindo();
      }
      else{
@@ -81,7 +86,7 @@ public class MainController {
        else{
             try {
                 Main.cl.write("NEWUSER: "+firstName.getText()+","+lastName.getText()+","+emailID.getText()+","+userName.getText()+","+p1+","+mobile.getText());
-                res = Main.cl.read();
+                res = Main.cl.read().toString();
                 if(res.equals("USEREXIST"))
                      JOptionPane.showMessageDialog(null, "User Exist");
                 else{
@@ -90,7 +95,8 @@ public class MainController {
                     // loginPanel.setVisible(true);
                 }
             } catch (IOException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.print(ex);
+                        
             }
             //dispose();
        }

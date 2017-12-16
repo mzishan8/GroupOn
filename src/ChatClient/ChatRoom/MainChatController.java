@@ -8,22 +8,27 @@ package ChatClient.ChatRoom;
 import ChatClient.Client;
 import ChatClient.Main;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
-import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
@@ -31,13 +36,13 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
 /**
@@ -88,7 +93,66 @@ public class MainChatController implements Initializable{
         //});
         new Thread (new ReadMsg(groupContainer,groupList,userList,observableList,userName.getText(),userContainer,chatPane)).start();
     }
-    
+    @FXML
+    private void sendAttachment(ActionEvent event) throws IOException
+    {
+          //filechooser
+         FileChooser fileChooser = new FileChooser();
+         File file =fileChooser.showOpenDialog(null);
+         fileChooser.setTitle("Attachment");
+         if(file!=null)
+         {
+              Main.cl.write("FILE IS SLECTED:"+file.getName()+":"+Main.cl.getUserName()+":"+chatUser.getText());
+              //ObjectOutputStream oos = new ObjectOutputStream(Main.cl.getSocket().getOutputStream());
+              FileInputStream fis = new FileInputStream(file);
+              System.out.println("ChatClient.ChatRoom.MainChatController.sendAttachment()");
+              byte[] buffer = new byte[fis.available()];
+              fis.read(buffer);
+              Main.cl.write(buffer);
+              System.out.println("ChatClient.ChatRoom.MainChatController.sendAttachment()......");
+              String destinationUser = chatUser.getText();
+              ListView<GridPane> msgList = userContainer.get(destinationUser);
+              GridPane gp = new GridPane();
+              ColumnConstraints c1 = new ColumnConstraints();
+              c1.setPercentWidth(100);
+              gp.getColumnConstraints().add(c1);
+              Label newLabel = new Label("Attachment");
+              newLabel.setMaxWidth(400);
+              newLabel.setWrapText(true);
+              message.setText("");
+              newLabel.getStyleClass().add("chat-bubble-send");
+              GridPane.setHalignment(newLabel, HPos.RIGHT);
+              gp.addRow(0, newLabel);
+              Platform.runLater(new Runnable() {
+               @Override
+               public void run() {
+                   
+                   msgList.getItems().add(gp);
+                    msgList.scrollTo(msgList.getItems().size()-1);
+                   msgList.setCellFactory(param -> new ListCell<GridPane>(){
+                       {
+                           prefWidthProperty().bind(msgList.widthProperty().subtract(2));
+                            setMaxWidth(Control.USE_PREF_SIZE);
+                       }
+
+                       @Override
+                       protected void updateItem(GridPane item, boolean empty) {
+                           super.updateItem(item, empty); //To change body of generated methods, choose Tools | Templates.
+                           setGraphic(item);
+                       }
+                       
+                   });     
+               }
+           });
+              fis.close();
+              
+         }
+         else
+         {
+              System.out.println("null selection");
+         }
+        
+    }
     @FXML
     private void sendAction(ActionEvent event) throws IOException{
         if(!message.getText().trim().equals(null)){
@@ -219,6 +283,7 @@ class ReadMsg extends Task<Integer>{
         HashMap<String, ListView<GridPane>> userContainer; 
         String userName;
         ListView<String> groupList;
+        boolean flag = false;
     public ReadMsg(HashMap<String, String> groupContainer,ListView<String> groupList,ListView<String> userList , ObservableList observableList,String userName,HashMap<String, ListView<GridPane>> userContainer , Pane chatPane) {
         this.chatPane = chatPane;
         this.groupContainer=groupContainer;
@@ -231,10 +296,29 @@ class ReadMsg extends Task<Integer>{
         
     @Override
     protected Integer call() throws Exception {
-        while(true){
-             String msg = client.read();
+        String msg = null;
+        while(true){ 
+            synchronized(this){
+             Object obj = client.read();
+             if(flag){                         
+                 byte[] buffer = (byte[]) obj;
+                 System.out.println("buffer read");
+                 try (FileOutputStream fos = new FileOutputStream("english.pdf")) {
+                     System.out.println(Main.cl.read());
+                     fos.write(buffer);
+                     fos.close();
+                 }
+                 flag = false;                                     
+                 continue;
+             }
+             msg = obj.toString();
              System.out.println("int read thread  =  "+msg);
-             if(msg.startsWith("GroupCreateRequest:")){
+             if(msg.startsWith("Atch:"))
+             {
+                 String attach = msg.split(":")[1]+":"+msg.split(":")[0]+"@"+msg.split(":")[2]+";"+msg.split(":")[3];
+                 writeSingleUser(attach);
+             }
+             else if(msg.startsWith("GroupCreateRequest:")){
                  msg=msg.split(":")[1];
                  createGroup(msg);
              }
@@ -252,6 +336,34 @@ class ReadMsg extends Task<Integer>{
                      if(userContainer.get(str) == null){
                           System.out.println("why here ..... in  list creatin   ");
                           ListView<GridPane> newListView =  new ListView<>();
+                          newListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                               @Override
+                               public void handle(MouseEvent event) {
+                               GridPane gp = newListView.getSelectionModel().getSelectedItem();
+                               ObservableList observe = FXCollections.observableArrayList();
+                               Label node = (Label)gp.getChildren().get(0);
+                               String str = node.getText();
+                               if(str.startsWith("Atch@"))
+                               {
+                                str=str.split("@")[1];
+                                DirectoryChooser chooser = new DirectoryChooser();
+                                chooser.setTitle("Download");
+//   
+                                  File selectedDirectory = chooser.showDialog(null);
+                                   System.out.println("selected dir "+selectedDirectory.getAbsolutePath() );
+                                   try {
+                                       flag =true;
+                                       Main.cl.write("REQUEST FOR DOWNLOADFILE:"+str);
+                                   } catch (IOException ex) {
+                                       Logger.getLogger(ReadMsg.class.getName()).log(Level.SEVERE, null, ex);
+                                   }
+                               }
+                              else
+                              {
+                                  System.out.println("not a file");
+                               } //To change body of generated methods, choose Tools | Templates.
+                            }
+                        }); 
                           newListView.setPrefSize(585, 419);
                           newListView.setLayoutX(12);
                           newListView.setLayoutY(36);
@@ -289,6 +401,7 @@ class ReadMsg extends Task<Integer>{
              }
           }
         }
+    }
     synchronized private void createGroup(String msg)
     {
         String user[] = msg.split(",");
@@ -375,6 +488,10 @@ class ReadMsg extends Task<Integer>{
     private void writeInGroup(String msg , String msgUser){
                msg =  msg.split(";")[0];
                  ListView<GridPane> msgList = userContainer.get(msgUser);
+                 
+                     
+                     
+                
                 // System.out.println("ChatClien :msg after split :"+msg);
                  if(msgList!=null ){
                     Label msgLabel = new Label(msg);
@@ -407,6 +524,10 @@ class ReadMsg extends Task<Integer>{
                    });
                  });
                  }
+    }
+
+    private byte[] obj() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
  }
    

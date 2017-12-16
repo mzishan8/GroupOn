@@ -5,6 +5,8 @@ import java.awt.HeadlessException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -23,8 +25,8 @@ import javax.swing.JOptionPane;
  */
 public class Client {
     Socket soc=null;
-    private BufferedReader dis;
-    private PrintWriter dos;
+    private ObjectInputStream dis;
+    private ObjectOutputStream dos;
     Client client;
     String userName;
     /**
@@ -32,14 +34,14 @@ public class Client {
      * @param user
      * @param pass
      */
-    public boolean  login(String user , String pass) {
+    public boolean  login(String user , String pass) throws ClassNotFoundException {
         userName=user;
         System.out.println("Login Function of Cleint class Is Called");
         client = this;
         try{
             String msg = "LOGIN: "+user+","+pass;
-            dos.println(msg);
-            String res = dis.readLine();
+            dos.writeObject(msg);
+            String res = dis.readObject().toString();
             if(res.equals(user)){
                 JOptionPane.showMessageDialog(null, "You are Currect User");
               return true;
@@ -61,22 +63,31 @@ public class Client {
             try {
                     
                     soc=new Socket(ip,port);
-                    dis=new BufferedReader(new InputStreamReader(soc.getInputStream()));
-                    dos=new PrintWriter(soc.getOutputStream(),true);
+                    System.out.println("ChatClient.Client.connection() ... client Socket is created ");
+                    dos=new ObjectOutputStream(soc.getOutputStream());
+                    dos.flush();
+                    dis=new ObjectInputStream(soc.getInputStream());
                 } catch (IOException ex) {
                     Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 return soc!=null;
         }
-    public String read() throws IOException{
-       String msg=dis.readLine();
-       System.out.println("message  = "+msg);
+    public Object read() throws IOException{
+       Object msg=null;
+        try {
+            //Platform
+            msg = dis.readObject();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       System.out.println("message  = "+msg.toString());
       // while((msg = dis.readLine())== null);
         return msg;
     }
 
-    public void write(String msg) throws IOException {
-        dos.println(msg);
+    public void write(Object msg) throws IOException {
+        dos.writeObject(msg);
+        dos.flush();
     }
     public String getUserName()
     {
@@ -86,7 +97,7 @@ public class Client {
         String msg = "GETPASSWORD: "+user;
         try {
             write(msg);
-            String res = read();
+            String res = read().toString();
             if(!res.equals(null))
                 return res;
         } catch (IOException ex) {

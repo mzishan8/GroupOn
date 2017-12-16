@@ -4,6 +4,8 @@ package ChatServer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -22,13 +24,16 @@ import java.util.logging.Logger;
 public class Session {
     private Socket soc;
     private String userName;
-    private BufferedReader dis;
-    private PrintWriter dos;
+    public ObjectOutputStream dos;
+    public ObjectInputStream dis;
     public Session(Socket soc){
         this.soc=soc;
-        try {
-            dis=new BufferedReader(new InputStreamReader(soc.getInputStream()));
-            dos=new PrintWriter(soc.getOutputStream(),true);
+        try {   
+            
+            dos=new ObjectOutputStream(soc.getOutputStream());
+            dos.flush();
+            dis=new ObjectInputStream(soc.getInputStream());
+            System.out.println("object stream created");
         } catch (IOException ex) {
             Logger.getLogger(Session.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -36,17 +41,20 @@ public class Session {
     public void setUserName(String user){
         userName=user;
     }
-    public void write(String msg) throws IOException{
-        dos.println(msg);
+    public void write(Object msg) throws IOException{
+        dos.writeObject(msg);
         dos.flush();
     }
-    public String read(){
-        String msg = null;
+   
+    public Object read(){
+        Object msg = null;
         try {
-            msg = dis.readLine();
+            msg = dis.readObject();
            // while((msg = dis.readLine()) == null );
-             System.out.println("Client message   "+msg);
+             System.out.println("Client message   "+msg.toString());
         } catch (IOException ex) {
+            Logger.getLogger(Session.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(Session.class.getName()).log(Level.SEVERE, null, ex);
         }
         return msg;

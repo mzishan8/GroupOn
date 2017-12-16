@@ -3,7 +3,11 @@ package ChatServer;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
@@ -54,6 +58,8 @@ class ClientHandler implements Runnable{
     private Socket soc;
     private Session client;
     private ArrayList<Session> clientList;
+    boolean flag = false;
+    String fileInfo=null;
     JdbcOdbc db;
     ClientHandler(Socket soc , ArrayList<Session> clientList, JdbcOdbc db){
         client = new Session(soc);
@@ -69,7 +75,7 @@ class ClientHandler implements Runnable{
         String clientIP = soc.getRemoteSocketAddress().toString();
         System.out.println("Client IP  ="+clientIP);
         do{
-            clientMsg = client.read();
+            clientMsg = client.read().toString();
             if(clientMsg.startsWith("QUIT")){
                 System.out.println("Client Logout Without Login");
                 try {
@@ -117,9 +123,63 @@ class ClientHandler implements Runnable{
             }
         }while(!accept);
       while(true){
-          String msg = client.read();
+          
+          String msg=null;
+          if(flag && fileInfo!=null){
+              synchronized(this){
+              try {
+                  
+                  System.out.println("ChatServer.ClientHandler.run()File Selected.."+fileInfo.split(":")[1]);
+                  byte[] buffer = (byte[])client.dis.readObject();
+                  FileOutputStream fos = new FileOutputStream(fileInfo.split(":")[1]);
+                  fos.write(buffer);
+                  fos.close();
+                  System.out.println("ChatServer.ClientHandler.run().........");
+                  broadcast("Atch:"+fileInfo.split(":")[2]+":"+fileInfo.split(":")[1]+":"+fileInfo.split(":")[3]);
+                  //continue;
+              } catch (IOException ex) {
+                  Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+              }   catch (ClassNotFoundException ex) { 
+                      Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+                  }
+              flag =false;
+              fileInfo = null;
+              continue;
+             }
+          }
+          msg = client.read().toString();
           System.out.println("ChatServer.ClientHandler.run()dsfsfdfsfsf");
-            if(msg.startsWith("GroupCreateRequest:")){
+           if(msg.startsWith("FILE IS SLECTED:")){
+             flag = true;
+             fileInfo = msg;
+             continue;
+          }
+           else if(msg.startsWith("REQUEST FOR DOWNLOADFILE:"))
+          {
+              
+                                try {
+                  FileInputStream fis = new FileInputStream(new File(msg.split(":")[1]));
+                  if(fis==null)
+                      System.out.println("file not found");
+                  byte[] buffer = new byte[fis.available()];
+                  fis.read(buffer);
+                  client.write(buffer);
+                  System.out.println("File send success...");
+                  fis.close();
+                  client.write("fully data send by server");
+                  continue;
+                  
+              } catch (FileNotFoundException ex) {
+                  Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+              } catch (IOException ex) {
+                  Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+              }
+      
+              
+             
+          }
+         
+          else  if(msg.startsWith("GroupCreateRequest:")){
                 System.out.println("group create condtion ="+msg);
               try {
                   broadcast(msg);
