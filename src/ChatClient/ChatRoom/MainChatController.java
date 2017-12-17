@@ -7,6 +7,7 @@ package ChatClient.ChatRoom;
 
 import ChatClient.Client;
 import ChatClient.Main;
+import ChatClient.ModalDialog;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -44,6 +45,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 /**
  *
@@ -284,6 +286,7 @@ class ReadMsg extends Task<Integer>{
         String userName;
         ListView<String> groupList;
         boolean flag = false;
+        String path=null;
     public ReadMsg(HashMap<String, String> groupContainer,ListView<String> groupList,ListView<String> userList , ObservableList observableList,String userName,HashMap<String, ListView<GridPane>> userContainer , Pane chatPane) {
         this.chatPane = chatPane;
         this.groupContainer=groupContainer;
@@ -296,15 +299,24 @@ class ReadMsg extends Task<Integer>{
         
     @Override
     protected Integer call() throws Exception {
+        File selectedDirectory;
         String msg = null;
+        userList.setStyle("-fx-control-inner-background: blue; -fx-font-size: 14px; -fx-font-family: 'SketchFlow Print';-fx-font: bold italic 14pt \"Arial\"; ");
         while(true){ 
             synchronized(this){
              Object obj = client.read();
              if(flag){                         
                  byte[] buffer = (byte[]) obj;
                  System.out.println("buffer read");
-                 try (FileOutputStream fos = new FileOutputStream("english.pdf")) {
+                 try (FileOutputStream fos = new FileOutputStream(path)) {
                      System.out.println(Main.cl.read());
+                     Platform.runLater(new Runnable() {
+                         @Override
+                         public void run() {
+                             ModalDialog md =   new ModalDialog((Stage)chatPane.getScene().getWindow());//To change body of generated methods, choose Tools | Templates.
+                         }
+                     });
+                     
                      fos.write(buffer);
                      fos.close();
                  }
@@ -340,6 +352,7 @@ class ReadMsg extends Task<Integer>{
                                @Override
                                public void handle(MouseEvent event) {
                                GridPane gp = newListView.getSelectionModel().getSelectedItem();
+                               newListView.getSelectionModel().clearSelection();
                                ObservableList observe = FXCollections.observableArrayList();
                                Label node = (Label)gp.getChildren().get(0);
                                String str = node.getText();
@@ -349,11 +362,14 @@ class ReadMsg extends Task<Integer>{
                                 DirectoryChooser chooser = new DirectoryChooser();
                                 chooser.setTitle("Download");
 //   
-                                  File selectedDirectory = chooser.showDialog(null);
-                                   System.out.println("selected dir "+selectedDirectory.getAbsolutePath() );
+                                  
+                                   //System.out.println("selected dir "+selectedDirectory.getAbsolutePath() );
                                    try {
+                                       File selectedDirectory1 = chooser.showDialog(null);
+                                       path=selectedDirectory1.getAbsolutePath()+"\\"+str;
                                        flag =true;
                                        Main.cl.write("REQUEST FOR DOWNLOADFILE:"+str);
+                                      // newListView.setFocusModel(null);
                                    } catch (IOException ex) {
                                        Logger.getLogger(ReadMsg.class.getName()).log(Level.SEVERE, null, ex);
                                    }
@@ -366,8 +382,9 @@ class ReadMsg extends Task<Integer>{
                         }); 
                           newListView.setPrefSize(585, 419);
                           newListView.setLayoutX(12);
-                          newListView.setLayoutY(36);
+                          newListView.setLayoutY(30);
                           newListView.setVisible(false);
+              
                           Platform.runLater(() ->{
                           chatPane.getChildren().add(newListView);
                            //msgList.scrollTo(msgList.getItems().size()-1);

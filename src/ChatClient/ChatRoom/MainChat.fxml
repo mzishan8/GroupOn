@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane prefHeight="600.0" prefWidth="800.0" stylesheets="@mainchat.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ChatClient.ChatRoom.MainChatController">
    <left>
@@ -46,7 +47,10 @@
                <image>
                   <Image url="@../user-default.png" />
                </image></ImageView>
-            <Label fx:id="userName" layoutX="112.0" layoutY="52.0" prefHeight="17.0" prefWidth="86.0" text="Label" />
+            <Label fx:id="userName" layoutX="105.0" layoutY="52.0" prefHeight="27.0" prefWidth="93.0">
+               <font>
+                  <Font name="System Bold Italic" size="14.0" />
+               </font></Label>
             <Separator fx:id="chatPSeprator" layoutX="200.0" layoutY="106.0" prefHeight="3.0" prefWidth="598.0" />
             <Pane fx:id="fPPane" layoutX="194.0" layoutY="3.0" prefHeight="100.0" prefWidth="404.0">
                <children>
@@ -54,8 +58,11 @@
                      <image>
                         <Image url="@../user-default.png" />
                      </image></ImageView>
-                  <Label fx:id="chatUser" layoutX="163.0" layoutY="42.0" prefHeight="17.0" prefWidth="137.0" text="Label" />
-                  <Separator layoutX="3.0" layoutY="3.0" orientation="VERTICAL" prefHeight="96.0" prefWidth="0.0" />
+                  <Label fx:id="chatUser" layoutX="163.0" layoutY="42.0" prefHeight="17.0" prefWidth="137.0">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font></Label>
+                  <Separator layoutX="3.0" layoutY="8.0" orientation="VERTICAL" prefHeight="96.0" prefWidth="0.0" />
                </children>
             </Pane>
          </children>

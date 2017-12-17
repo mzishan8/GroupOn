@@ -17,7 +17,6 @@
     -fx-font: bold italic 14pt "Arial";
     -fx-padding: 20px;
     -fx-position: absolute;
-    -fx-maxLength:500px;
     -fx-layout_width:"wrap_content";
     -fx-layout_height:"wrap_content";
 }
