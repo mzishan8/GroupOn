@@ -45,6 +45,7 @@ public class Server {
         System.out.println("Server is Running ...");
         while(true){
             client = server.accept();
+            System.out.println("ChatServer.Server.run()");
             db = new JdbcOdbc();
             new Thread(new ClientHandler(client,clientList,db)).start();
         }

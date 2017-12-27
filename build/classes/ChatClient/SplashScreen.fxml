@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="ChatClient.SplashScreenController">
+   <children>
+      <ProgressIndicator layoutX="200.0" layoutY="70.0" prefHeight="138.0" prefWidth="182.0" />
+      <Label fx:id="label" layoutX="200.0" layoutY="269.0" prefHeight="36.0" prefWidth="225.0" text="Connecting to Server .........">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

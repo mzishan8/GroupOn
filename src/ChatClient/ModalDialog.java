@@ -30,7 +30,7 @@ public class ModalDialog {
         stage.initOwner(stg);
         stage.setTitle("Download Complete");
         Group root = new Group();
-         Scene scene = new Scene(root, 50, 70, Color.GRAY);
+         Scene scene = new Scene(root, 70, 100, Color.GRAY);
         
          btn.setOnAction(new EventHandler<ActionEvent>() {
 

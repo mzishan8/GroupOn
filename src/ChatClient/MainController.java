@@ -27,11 +27,13 @@ import javax.swing.JOptionPane;
  *
  * @author Zishan
  */
-public class MainController {
+public class MainController implements Initializable {
     @FXML
     TextField user = new TextField();
     @FXML
     PasswordField pass = new PasswordField();
+    @FXML
+    Label warning;
     
     /**
      *
@@ -53,6 +55,7 @@ public class MainController {
      else{
          pass.setText("");
          user.setText("");
+         warning.setVisible(true);
      }
      //String password = Main.cl.getPassword(user.getText());
        //System.out.println(user.getText()+" "+password);
@@ -117,5 +120,10 @@ public class MainController {
         fileName.setText(file.getPath());
         
     } 
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        warning.setVisible(false);
+    }
    
 }

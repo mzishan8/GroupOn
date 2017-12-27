@@ -2,12 +2,9 @@ package ChatClient;
 
 
 import java.awt.HeadlessException;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,6 +30,7 @@ public class Client {
      *
      * @param user
      * @param pass
+     * @throws java.lang.ClassNotFoundException
      */
     public boolean  login(String user , String pass) throws ClassNotFoundException {
         userName=user;
@@ -42,15 +40,9 @@ public class Client {
             String msg = "LOGIN: "+user+","+pass;
             dos.writeObject(msg);
             String res = dis.readObject().toString();
-            if(res.equals(user)){
-                JOptionPane.showMessageDialog(null, "You are Currect User");
-              return true;
-               // rdth.start();
-            }
-            else{
-                JOptionPane.showMessageDialog(null, "You are Not Currect User");
-                return false;
-            }
+            return res.equals(user); // JOptionPane.showMessageDialog(null, "You are Currect User");
+            // rdth.start();
+            //JOptionPane.showMessageDialog(null, "You are Not Currect User");
         }catch(IOException | HeadlessException ex){
             System.out.println(ex);
         }

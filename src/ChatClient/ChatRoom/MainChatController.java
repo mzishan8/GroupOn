@@ -81,6 +81,8 @@ public class MainChatController implements Initializable{
         chatPSeprator.setVisible(false);
        // Platform.runLater(() -> {
         userName.setText(Main.cl.getUserName());
+        userList.setStyle("-fx-control-inner-background: gray; -fx-font-size: 14px; -fx-font-family: 'SketchFlow Print';-fx-font: bold italic 14pt \"Arial\"; ");
+        groupList.setStyle("-fx-control-inner-background: gray; -fx-font-size: 14px; -fx-font-family: 'SketchFlow Print';-fx-font: bold italic 14pt \"Arial\"; ");
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -104,8 +106,13 @@ public class MainChatController implements Initializable{
          fileChooser.setTitle("Attachment");
          if(file!=null)
          {
+             if(groupContainer.get(chatUser.getText())!=null){
+                 Main.cl.write("FILE IS SLECTED:"+file.getName()+":"+Main.cl.getUserName()+":"+"Group-"+chatUser.getText());
+             }
+             else{
               Main.cl.write("FILE IS SLECTED:"+file.getName()+":"+Main.cl.getUserName()+":"+chatUser.getText());
-              //ObjectOutputStream oos = new ObjectOutputStream(Main.cl.getSocket().getOutputStream());
+             }              
+            //ObjectOutputStream oos = new ObjectOutputStream(Main.cl.getSocket().getOutputStream());
               FileInputStream fis = new FileInputStream(file);
               System.out.println("ChatClient.ChatRoom.MainChatController.sendAttachment()");
               byte[] buffer = new byte[fis.available()];
@@ -172,7 +179,7 @@ public class MainChatController implements Initializable{
            c1.setPercentWidth(100);
            gp.getColumnConstraints().add(c1);
            Label newLabel = new Label(message.getText());
-           newLabel.setMaxWidth(400);
+           //newLabel.setMaxWidth(400);
            newLabel.setWrapText(true);
            message.setText("");
            newLabel.getStyleClass().add("chat-bubble-send");
@@ -301,7 +308,6 @@ class ReadMsg extends Task<Integer>{
     protected Integer call() throws Exception {
         File selectedDirectory;
         String msg = null;
-        userList.setStyle("-fx-control-inner-background: blue; -fx-font-size: 14px; -fx-font-family: 'SketchFlow Print';-fx-font: bold italic 14pt \"Arial\"; ");
         while(true){ 
             synchronized(this){
              Object obj = client.read();
@@ -356,6 +362,12 @@ class ReadMsg extends Task<Integer>{
                                ObservableList observe = FXCollections.observableArrayList();
                                Label node = (Label)gp.getChildren().get(0);
                                String str = node.getText();
+                               int indexof = str.indexOf(':');
+                               
+                               if(indexof!=-1){
+                                   System.out.println(".handle() ...   : found   0000 ");
+                                   str = str.split(":")[1];
+                               }
                                if(str.startsWith("Atch@"))
                                {
                                 str=str.split("@")[1];
@@ -367,8 +379,10 @@ class ReadMsg extends Task<Integer>{
                                    try {
                                        File selectedDirectory1 = chooser.showDialog(null);
                                        path=selectedDirectory1.getAbsolutePath()+"\\"+str;
-                                       flag =true;
-                                       Main.cl.write("REQUEST FOR DOWNLOADFILE:"+str);
+                                       if(path !=null){
+                                          flag =true;
+                                          Main.cl.write("REQUEST FOR DOWNLOADFILE:"+str);
+                                       }
                                       // newListView.setFocusModel(null);
                                    } catch (IOException ex) {
                                        Logger.getLogger(ReadMsg.class.getName()).log(Level.SEVERE, null, ex);
@@ -437,6 +451,46 @@ class ReadMsg extends Task<Integer>{
                          }
                      });
                    ListView<GridPane> newListView =  new ListView<>();
+                   newListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                               @Override
+                               public void handle(MouseEvent event) {
+                               GridPane gp = newListView.getSelectionModel().getSelectedItem();
+                               newListView.getSelectionModel().clearSelection();
+                               ObservableList observe = FXCollections.observableArrayList();
+                               Label node = (Label)gp.getChildren().get(0);
+                               String str = node.getText();
+                               int indexof = str.indexOf(':');
+                               
+                               if(indexof!=-1){
+                                   System.out.println(".handle() ...   : found   0000 ");
+                                   str = str.split(":")[1];
+                               }
+                               if(str.startsWith("Atch@"))
+                               {
+                                str=str.split("@")[1];
+                                DirectoryChooser chooser = new DirectoryChooser();
+                                chooser.setTitle("Download");
+//   
+                                  
+                                   //System.out.println("selected dir "+selectedDirectory.getAbsolutePath() );
+                                   try {
+                                       File selectedDirectory1 = chooser.showDialog(null);
+                                       path=selectedDirectory1.getAbsolutePath()+"\\"+str;
+                                       if(path !=null){
+                                          flag =true;
+                                          Main.cl.write("REQUEST FOR DOWNLOADFILE:"+str);
+                                       }
+                                      // newListView.setFocusModel(null);
+                                   } catch (IOException ex) {
+                                       Logger.getLogger(ReadMsg.class.getName()).log(Level.SEVERE, null, ex);
+                                   }
+                               }
+                              else
+                              {
+                                  System.out.println("not a file");
+                               } //To change body of generated methods, choose Tools | Templates.
+                            }
+                        }); 
                           newListView.setPrefSize(585, 419);
                           newListView.setLayoutX(12);
                           newListView.setLayoutY(32);
@@ -457,6 +511,7 @@ class ReadMsg extends Task<Integer>{
                  //System.out.println("ChatClien :msg   :"+msg);
                  if(msgUser.startsWith("Group-")){
                      msgUser = msgUser.split("-")[1];
+   
                      writeInGroup(msg , msgUser);
                      return;
                  }
@@ -474,7 +529,7 @@ class ReadMsg extends Task<Integer>{
                     c1.setPercentWidth(100);
                     gp.getColumnConstraints().add(c1);
                     Label newLabel = new Label(msg);
-                    newLabel.setMaxWidth(400);
+                    //newLabel.setMaxWidth(400);
                     newLabel.setWrapText(true);
                     newLabel.getStyleClass().add("chat-bubble-recieve");
                     
@@ -505,19 +560,16 @@ class ReadMsg extends Task<Integer>{
     private void writeInGroup(String msg , String msgUser){
                msg =  msg.split(";")[0];
                  ListView<GridPane> msgList = userContainer.get(msgUser);
-                 
-                     
-                     
-                
+ 
                 // System.out.println("ChatClien :msg after split :"+msg);
-                 if(msgList!=null ){
+                 if(msgList!=null && !msg.split(":")[0].equals(client.getUserName()) ){
                     Label msgLabel = new Label(msg);
                     GridPane gp = new GridPane();
                     ColumnConstraints c1 = new ColumnConstraints();
                     c1.setPercentWidth(100);
                     gp.getColumnConstraints().add(c1);
                     Label newLabel = new Label(msg);
-                    newLabel.setMaxWidth(400);
+                   // newLabel.setMaxWidth(400);
                     newLabel.setWrapText(true);
                     newLabel.getStyleClass().add("chat-bubble-recieve");
                     
