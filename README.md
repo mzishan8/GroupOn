@@ -3,30 +3,26 @@
 Chat Messenger in JavaFX
 
 ## Database Used 
-+Oracle 11g
+* Oracle 11g
 
-Features
+## Features
 
-single user Chatting + file transfer 
-Group chatting + file Transfer 
-Creating new Groups
-ONLY for online User
+* Single User Chat + File Transfer 
+* Group Chat + File Transfer 
+* Creating New Groups
 
 
-Connectivity
+## Connectivity
 
-UDP for findin the server in the LAN
-TCP/IP connection for Chatting and File sending
+* UDP for finding the server in the LAN
+* TCP/IP for Chatting and File sending
 
-Client:
-Brodcasting the msg to find the server in LAN
-Stream used for reading and writing
-ObjectOutputStream 
-ObjectInputStream 
+## Client: 
+* Broadcasts the message to find the server in LAN
 
-Server:
-Accepts the Broadcast Request for connection Establishment
-Responcd to that perticular client
+## Server:
+* Accepts the Broadcast Request for Connection Establishment
+* Responds to that Particular Client
 
 
      
