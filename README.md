@@ -1,11 +1,9 @@
 # GroupOn
 
-Chat Messenger in JAVAfx
+Chat Messenger in JavaFX
 
-It contain database connectivity in oracle11g
-     database Tables
-     Table 1 contains Registration Details and have Primary key which is userID
-     Table 2 contains Login Table contain userId and Password
+## Database Used 
++Oracle 11g
 
 Features
 
